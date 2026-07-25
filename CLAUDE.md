@@ -59,7 +59,7 @@ an international audience and is English-only.
 - Sub: "A 4-inch always-on desk display that shows live Claude
   Code, Codex and Antigravity usage from your laptop. 86×86 mm
   footprint, USB-C powered, sits on the desk with its own base."
-- Primary CTA: **Get setup → /setup**
+- Primary CTA: **Follow on Kickstarter** (see *Campaign CTAs* below)
 - Secondary CTA: **How it works → /how-it-works**
 - Visual: `prototype.jpg` on the right, or a device frame cycling
   through the three providers' day-mode dashboards.
@@ -79,8 +79,32 @@ ESP32-S3 · 16 MB Flash · 8 MB PSRAM · 480×480 capacitive touch ·
 **"How it works" preview** — 3-step diagram:
 `Laptop (tokenmonitor-mcp broker) → Wi-Fi LAN → Wall device`
 
-**Closing CTA** — "Plug it in. Pair it from Claude Code. Done."
-→ /setup
+**Closing CTA** — the Kickstarter band (`#kickstarter`), then a small
+"Already have a unit? → /setup" line for existing owners.
+
+### Campaign CTAs (read before touching any button)
+
+Every primary CTA on the site — header, hero, theme-lab mid-page, the
+landing band, how-it-works, FAQ — points at the **Kickstarter campaign**,
+never at a form or a waitlist. The URL and button label live in
+`src/consts.ts` (`KICKSTARTER_URL`, `KICKSTARTER_CTA`); import them rather
+than hard-coding.
+
+The campaign is in **prelaunch**: its page only offers *Notify me on
+launch*, so copy says *follow / get notified* and never *back it now* or
+*pledge*. `src/consts.ts` carries the launch-day checklist of every place
+prelaunch wording lives.
+
+Price anchor: **Super Early Bird €99, first 50 backers, excl. shipping &
+tax** — the only price the site states. Kickstarter owns the rest of the
+tier ladder, shipping rates and delivery dates; don't restate them here,
+and never invent a delivery window (the campaign states none). Shipping is
+**US, Canada, EU and UK only** — not "worldwide".
+
+A dismissible announce bar (`src/components/AnnounceBar.astro`) sits above
+the fixed header on every page. Its height feeds `--announce-h`; anything
+that must clear the fixed chrome reads `--chrome-h` (see `global.css`)
+instead of hard-coding pixels.
 
 ### 2. How it works (`/how-it-works`)
 
@@ -342,6 +366,8 @@ several of them wrong; keep them right.
 
 ## Public links to use
 
+- Kickstarter campaign (every CTA target):
+  `https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk`
 - Broker + MCP server: `https://github.com/fractal-manifold/tokenmonitor-mcp`
 - Marketplace (plugin source): `https://github.com/fractal-manifold/mcp-marketplace` → `plugins/tokenmonitor/`
 - This site's repo: `https://github.com/fractal-manifold/tokenmonitor-docs`

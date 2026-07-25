@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
 import BgStage from '../components/BgStage.astro';
+import AnnounceBar from '../components/AnnounceBar.astro';
 import Header from '../components/Header.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import LegalFooter from '../components/LegalFooter.astro';
-import { SITE } from '../consts';
+import { SITE, ANNOUNCE_KEY } from '../consts';
 
 const {
   title,
@@ -50,11 +51,15 @@ const ogImageUrl = new URL(ogImage, SITE).href;
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.png" />
   <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f8f8f8" media="(prefers-color-scheme: light)" />
-  {/* Anti-FOUC theme bootstrap — must stay inline & render-blocking in <head>. */}
-  <script is:inline>try{var t=localStorage.getItem('tmon:theme');document.documentElement.dataset.theme=(t==='dark')?'dark':'light';}catch(e){document.documentElement.dataset.theme='light';}</script>
+  {/* Anti-FOUC theme + announce-bar bootstrap — must stay inline &
+      render-blocking in <head>. The announce flag also drives --announce-h,
+      so applying it here keeps a dismissed bar from flashing and the chrome
+      offset from shifting after first paint. */}
+  <script is:inline define:vars={{ announceKey: ANNOUNCE_KEY }}>try{var t=localStorage.getItem('tmon:theme');document.documentElement.dataset.theme=(t==='dark')?'dark':'light';}catch(e){document.documentElement.dataset.theme='light';}try{if(localStorage.getItem(announceKey)==='dismissed'){document.documentElement.dataset.announce='off';}}catch(e){}</script>
 </head>
 <body data-page={page}>
   <BgStage />
+  <AnnounceBar />
   <Header page={page} />
   <main>
     <slot />

@@ -1,0 +1,28 @@
+---
+// Site-wide campaign bar, above the fixed header on every page.
+// Height lives in --announce-h (global.css); dismissing sets
+// data-announce="off" on <html>, which zeroes it and hides the bar. The
+// initial state is applied by the render-blocking bootstrap in Layout.astro,
+// so a dismissed bar never flashes and the layout never shifts after paint.
+import { KICKSTARTER_URL } from '../consts';
+---
+<div class="announce-bar" id="announceBar">
+  <a href={KICKSTARTER_URL} target="_blank" rel="noopener">
+    <span>TokenMonitor is coming to Kickstarter</span>
+    <span class="announce-long">— <u>follow the campaign to get notified at launch</u></span>
+    <span class="arrow">→</span>
+  </a>
+  <button class="announce-close" id="announceClose" type="button" aria-label="Dismiss announcement">×</button>
+</div>
+
+<script>
+  import { ANNOUNCE_KEY } from '../consts';
+
+  document.getElementById('announceClose')?.addEventListener('click', () => {
+    document.documentElement.dataset.announce = 'off';
+    try { localStorage.setItem(ANNOUNCE_KEY, 'dismissed'); } catch (_) {}
+    // The button we were on just went display:none — hand focus to the next
+    // thing in the header rather than dumping it back on <body>.
+    document.querySelector<HTMLElement>('.site-header .brand-mark')?.focus();
+  });
+</script>

@@ -12,9 +12,23 @@
   --font-display: 'Montserrat', system-ui, sans-serif;
   --font-body:    'Montserrat', system-ui, -apple-system, sans-serif;
   --font-brand:   'Bruno Ace', system-ui, sans-serif;
+
+  /* Fixed chrome height, in one place. The header is position:fixed and the
+   * announce bar sits above it, so anything that has to clear the top of the
+   * page (body padding, 100vh math, sticky offsets, scroll-margin) reads
+   * --chrome-h instead of re-deriving the number. Dismissing the bar sets
+   * data-announce="off" on <html>, which zeroes its share. */
+  --header-h:   80px;
+  --announce-h: 40px;
+  --chrome-h:   calc(var(--header-h) + var(--announce-h));
 }
+:root[data-announce='off'] { --announce-h: 0px; }
 
 * { box-sizing: border-box; }
+/* Every in-page anchor (#skills, #security, #custom-panel …) has to clear the
+ * fixed chrome, not just the FAQ's. One rule on the scroll container covers
+ * them all, and follows the bar's dismissed state. */
+html { scroll-padding-top: calc(var(--chrome-h) + 20px); }
 html, body {
   margin: 0; padding: 0;
   background: var(--color-bg);
@@ -25,7 +39,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-body { padding-top: 80px; overflow-x: hidden; }
+body { padding-top: var(--chrome-h); overflow-x: hidden; }
 
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
@@ -66,10 +80,54 @@ img { display: block; max-width: 100%; }
 @keyframes float-3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px, -40px); } }
 @media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
 
+/* ─── Announce bar ─────────────────────────────────────────── */
+/* Sits above the fixed header, which is offset by --announce-h. Its height is
+ * pinned to that var and the copy must never wrap: a second line would slide
+ * under the header instead of pushing it down. */
+.announce-bar {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--announce-h); z-index: 101;
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+  padding: 0 2.75rem 0 1.25rem;
+  /* Brand gradient under a flat scrim: white small text over raw #F59E0B is
+   * ~2.2:1. The 45% black lifts the worst point (the gold end) past 6:1. */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), var(--gradient-brand);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+:root[data-announce='off'] .announce-bar { display: none; }
+.announce-bar a {
+  color: #ffffff;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+.announce-bar a u { text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.announce-bar a:hover u { text-decoration-color: rgba(255, 255, 255, 0.55); }
+.announce-bar .arrow { transition: transform var(--ease-snappy); }
+.announce-bar a:hover .arrow { transform: translateX(3px); }
+.announce-close {
+  position: absolute; right: 0.6rem; top: 50%;
+  transform: translateY(-50%);
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  background: transparent; border: 0; border-radius: var(--radius-md);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.05rem; line-height: 1;
+  cursor: pointer;
+}
+.announce-close:hover { color: #ffffff; background: rgba(0, 0, 0, 0.14); }
+/* The long form of the sentence, dropped well before it would wrap. */
+@media (max-width: 1000px) { .announce-long { display: none; } }
+
 /* ─── Header ───────────────────────────────────────────────── */
 .site-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: 80px; z-index: 100;
+  position: fixed; top: var(--announce-h); left: 0; right: 0;
+  height: var(--header-h); z-index: 100;
   background: rgba(10,10,10,0.72);
   backdrop-filter: blur(14px);
   border-bottom: var(--border-faint);
@@ -698,12 +756,16 @@ code { overflow-wrap: anywhere; }
 }
 
 @media (max-width: 900px) {
-  body { padding-top: 64px; }
-  .site-header { height: 64px; }
+  /* Shorter header, taller bar (the copy is centred on one line at 380px). */
+  :root { --header-h: 64px; --announce-h: 46px; }
+  .announce-bar { font-size: 0.68rem; letter-spacing: 0.4px; padding-inline: 1rem 2.5rem; }
   .site-header .inner { padding: 0 1.25rem; gap: 1rem; }
   .site-nav {
+    /* --header-h, not --chrome-h: .site-header has a backdrop-filter, which
+     * makes it the containing block for this fixed drawer, so the offset is
+     * measured from the header's own top, not from the viewport's. */
     position: fixed;
-    inset: 64px 0 auto 0;
+    inset: var(--header-h) 0 auto 0;
     flex-direction: column;
     gap: 0;
     background: rgba(10,10,10,0.96);

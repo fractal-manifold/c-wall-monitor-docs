@@ -2,10 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/Section.astro';
 import SectionHead from '../components/SectionHead.astro';
+import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 
 const title = 'TokenMonitor — See your AI usage on your desk';
 const description =
-  'A 4-inch always-on desk display that shows live Claude Code, Codex and Antigravity usage from your laptop.';
+  'A 4-inch always-on desk display that shows live Claude Code, Codex and Antigravity usage from your laptop. Coming soon on Kickstarter.';
 ---
 <Layout
   title={title}
@@ -36,7 +37,7 @@ const description =
       <h1>See your <span class="accent gradient-text">AI usage</span><br />on your desk.</h1>
       <p class="lead">A 4-inch always-on desk display that shows your live Claude Code, Codex and Antigravity usage — straight from the machine you already work on, with the logins you already have.</p>
       <div class="cta-row">
-        <a href="#" class="btn btn-primary">Get early access <span class="arrow">→</span></a>
+        <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary">{KICKSTARTER_CTA} <span class="arrow">→</span></a>
         <a href="/how-it-works.html" class="btn btn-ghost">How it works</a>
       </div>
       <div class="meta-row">
@@ -44,7 +45,7 @@ const description =
         <span><span class="dot"></span>No new API key</span>
         <span><span class="dot"></span>Open-source broker</span>
       </div>
-      <p class="hero-price">Ships worldwide &middot; delivery expected before Q4&nbsp;2026</p>
+      <p class="hero-price">Super Early Bird &euro;99 &middot; first 50 backers &middot; excl. shipping &amp; tax<br />Ships to the US, Canada, the EU &amp; the UK</p>
     </div>
     <div class="scroll-cue" aria-hidden="true">
       <span>More below</span>
@@ -169,7 +170,7 @@ const description =
       </div>
     </div>
     <div class="midcta">
-      <a href="#" class="btn btn-primary">Get early access <span class="arrow">→</span></a>
+      <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary">{KICKSTARTER_CTA} <span class="arrow">→</span></a>
     </div>
   </Section>
 
@@ -287,15 +288,15 @@ const description =
     </div>
   </Section>
 
-  <!-- ─── Waitlist ─────────────────────────────────────────── -->
-  <Section id="waitlist">
+  <!-- ─── Kickstarter ──────────────────────────────────────── -->
+  <Section id="kickstarter">
     <div class="waitlist">
-      <span class="badge"><span class="pulse"></span>Early access · first 100</span>
-      <h2>Get early access.</h2>
-      <p class="price-meta">Ships worldwide &middot; delivery expected before Q4&nbsp;2026</p>
-      <p class="sub">The first run is a small, carefully assembled batch — each unit pre-flashed and tested, ready to pair out of the box. We're finalising production with a manufacturing partner now; join the waitlist and we'll email you the moment units open.</p>
+      <span class="badge"><span class="pulse"></span>Coming soon · Kickstarter</span>
+      <h2>Launching on Kickstarter.</h2>
+      <p class="price-meta">Super Early Bird &euro;99 &middot; first 50 backers &middot; excl. shipping &amp; tax<br />Ships to the US, Canada, the EU &amp; the UK</p>
+      <p class="sub">The first run is a small, carefully assembled batch — each unit pre-flashed and tested, ready to pair out of the box. The campaign funds certification and that production run, with our manufacturing partner. Follow it on Kickstarter and you'll be emailed the moment it opens.</p>
       <div class="cta-row" style="display:flex; gap:1rem; flex-wrap:wrap;">
-        <a href="#" class="btn btn-primary">Get early access <span class="arrow">→</span></a>
+        <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary">{KICKSTARTER_CTA} <span class="arrow">→</span></a>
       </div>
     </div>
   </Section>
@@ -361,7 +362,7 @@ const description =
   /* ── Landing-specific ───────────────────────────────────── */
   .hero {
     position: relative;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - var(--chrome-h));
     display: flex;
     align-items: center;
     padding: 5rem 0 6rem 0;
@@ -650,7 +651,7 @@ const description =
   .theme-device { justify-self: center; width: 100%; max-width: 340px; }
   .theme-device .device-frame { max-width: 340px; margin: 0 auto; }
 
-  .hero-price { margin-top: 1.1rem; font-size: 0.92rem; color: var(--fg-3); }
+  .hero-price { margin-top: 1.1rem; font-size: 0.92rem; line-height: 1.55; color: var(--fg-3); }
 
   .proto-tag {
     position: absolute; left: 14px; bottom: 14px; z-index: 3;
@@ -661,7 +662,7 @@ const description =
 
   .midcta { text-align: center; margin-top: 2.5rem; }
 
-  .price-meta { font-size: 0.92rem; color: var(--fg-2); margin: 0.4rem 0 1.4rem; }
+  .price-meta { font-size: 0.92rem; line-height: 1.55; color: var(--fg-2); margin: 0.4rem 0 1.4rem; }
 
   /* ── Custom-panel showcase ──────────────────────────────── */
   .panel-cta { display: grid; grid-template-columns: 340px 1fr; gap: 3.5rem; align-items: center; }

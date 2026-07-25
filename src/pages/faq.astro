@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 ---
 <Layout
   title="FAQ & troubleshooting — TokenMonitor"
@@ -86,6 +87,13 @@ import Layout from '../layouts/Layout.astro';
               <summary class="acc-summary">What does it need to work? <span class="plus">+</span></summary>
               <div class="acc-body">
                 <p>A machine that runs your AI CLI with the <code>tokenmonitor-mcp</code> broker running on it; the device and that machine on the same 2.4&nbsp;GHz Wi-Fi / reachable LAN (port <code>8765</code> between them); and internet for the live percentages, weather and clock. If the broker's machine sleeps, the dashboard freezes; if only the internet drops, your local token totals keep updating while the live percentages and weather hold their last values.</p>
+              </div>
+            </details>
+
+            <details class="acc-item">
+              <summary class="acc-summary">Can I buy one yet? <span class="plus">+</span></summary>
+              <div class="acc-body">
+                <p>Not yet — TokenMonitor is launching on Kickstarter, and the campaign page is in prelaunch. <a href={KICKSTARTER_URL} target="_blank" rel="noopener">Follow it there</a> and Kickstarter emails you the moment it opens. First-run units ship pre-flashed and tested to the United States, Canada, the European Union and the United Kingdom. Prices, shipping and delivery estimates land on the campaign's reward tiers when it opens.</p>
               </div>
             </details>
 
@@ -315,10 +323,10 @@ import Layout from '../layouts/Layout.astro';
     <!-- ── Waitlist nudge (for prospects, not owners) ──────────── -->
     <div class="close-cta" style="text-align:center; padding: 3.5rem 2rem; background: var(--color-bg-tertiary); border: var(--border-faint); border-radius: var(--radius-xl); backdrop-filter: blur(8px); margin-top: 2rem;">
       <p class="eyebrow">Don't have one yet?</p>
-      <h2 style="margin-bottom: 1rem">Reserve early access.</h2>
+      <h2 style="margin-bottom: 1rem">It's launching on Kickstarter.</h2>
       <div class="rule" style="margin: 1.5rem auto;"></div>
-      <p style="max-width: 56ch; margin: 0 auto 2rem auto;">Early-access units are a small first batch, shipping worldwide before Q4&nbsp;2026, limited to the first 100 to join.</p>
-      <a href="#" class="btn btn-primary">Get early access <span class="arrow">→</span></a>
+      <p style="max-width: 56ch; margin: 0 auto 2rem auto;">The first run is a small batch, pre-flashed and tested, shipping to the US, Canada, the EU and the UK. Super Early Bird &euro;99 for the first 50 backers, excl. shipping &amp; tax.</p>
+      <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary">{KICKSTARTER_CTA} <span class="arrow">→</span></a>
     </div>
   </div>
 </Layout>
@@ -329,7 +337,12 @@ import Layout from '../layouts/Layout.astro';
   const links = document.querySelectorAll('.faq-toc a');
   function onScroll() {
     let active = sections[0].id;
-    const y = window.scrollY + 140;
+    // Measure the fixed chrome rather than hard-coding it: the header sits
+    // below the announce bar, and the bar can be dismissed at any time. The
+    // +24 keeps this clear of .faq-section's scroll-margin-top, so landing on
+    // an anchor doesn't sit exactly on the boundary and flicker.
+    const chrome = document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 100;
+    const y = window.scrollY + chrome + 24;
     sections.forEach(s => { if (s.offsetTop <= y) active = s.id; });
     links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
   }
@@ -358,7 +371,7 @@ import Layout from '../layouts/Layout.astro';
   }
   .faq-toc {
     position: sticky;
-    top: 100px;
+    top: calc(var(--chrome-h) + 20px);
     align-self: start;
   }
   .faq-toc h4 {
@@ -396,7 +409,7 @@ import Layout from '../layouts/Layout.astro';
   .faq-section {
     padding: 0;
     margin-bottom: 3rem;
-    scroll-margin-top: 100px;
+    /* Anchor clearance comes from html{scroll-padding-top} in global.css. */
   }
   .faq-section + .faq-section { margin-top: 1rem; }
   .faq-section .eyebrow { margin-bottom: 0.5rem; }

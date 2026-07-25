@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 ---
 <Layout
   title="How it works — TokenMonitor"
@@ -226,9 +227,9 @@ import Layout from '../layouts/Layout.astro';
   <div class="container">
     <div class="hiw-cta">
       <h2>Like how it's built?</h2>
-      <p class="lead" style="margin:0 auto">Early-access units are a small first batch, limited to the first 100. Setup is five steps, mostly waiting for it to boot.</p>
+      <p class="lead" style="margin:0 auto">It's launching on Kickstarter — Super Early Bird &euro;99 for the first 50 backers, excl. shipping &amp; tax. Setup is five steps, mostly waiting for it to boot.</p>
       <div class="cta-row">
-        <a href="#" class="btn btn-primary">Get early access <span class="arrow">→</span></a>
+        <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary">{KICKSTARTER_CTA} <span class="arrow">→</span></a>
         <a href="/setup.html" class="btn btn-ghost">Setup guide</a>
         <a href="/faq.html#security" class="btn btn-ghost">Security FAQ</a>
       </div>

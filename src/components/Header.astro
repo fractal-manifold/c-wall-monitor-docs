@@ -1,7 +1,7 @@
 ---
 // Site header + nav. Was injected at runtime by assets/site.js renderHeader().
 // Active link now comes from the `page` prop instead of body[data-page].
-import { NAV, WAITLIST_URL } from '../consts';
+import { NAV, KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 const { page } = Astro.props;
 ---
 <header class="site-header">
@@ -17,7 +17,7 @@ const { page } = Astro.props;
       {NAV.map((n) => (
         <a href={n.href} class={n.page === page ? 'active' : ''}>{n.label}</a>
       ))}
-      <a href={WAITLIST_URL} target="_blank" rel="noopener" class="btn btn-primary btn-sm nav-cta">Get early access</a>
+      <a href={KICKSTARTER_URL} target="_blank" rel="noopener" class="btn btn-primary btn-sm nav-cta">{KICKSTARTER_CTA}</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
       <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
