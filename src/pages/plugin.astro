@@ -147,7 +147,7 @@ tokenmonitor_provision_hint
         <span class="file-tag">~/.gemini/config/plugins/tokenmonitor/gemini-extension.json</span>
 <div class="code-block">&#123;
   <span class="str">"name"</span>:    <span class="str">"tokenmonitor"</span>,
-  <span class="str">"version"</span>: <span class="str">"0.10.4"</span>,
+  <span class="str">"version"</span>: <span class="str">"0.10.8"</span>,
   <span class="str">"mcpServers"</span>: &#123;
     <span class="str">"tokenmonitor"</span>: &#123;
       <span class="str">"command"</span>: <span class="str">"sh"</span>,
@@ -257,7 +257,7 @@ tokenmonitor_provision_hint
           <div class="syntax"><span class="arg">/tokenmonitor:settings</span> <span class="opt">&lt;natural-language change&gt;</span> [<span class="opt">--device</span> <span class="arg">&lt;device_id&gt;</span>]</div>
 
           <h4>Out of scope</h4>
-          <p class="desc" style="font-size:0.88rem">WiFi SSID / password cannot be changed remotely — a bad push would brick the device. Open the on-device Settings panel (long-press the mascot) or factory-reset and re-run <code class="inline-code">/tokenmonitor:configure</code>.</p>
+          <p class="desc" style="font-size:0.88rem">This skill will not change WiFi blind. Ask it to and it hands you to <code class="inline-code">/tokenmonitor:configure</code>, which does it properly: over a <strong>USB cable</strong> (no factory reset, and it keeps the broker URL and key), or over the LAN when the device already remembers the network you are naming. A device only ever auto-joins networks it has a password for, so an open network has to be chosen over the cable or on the device's own screen. Display and provider tweaks are also available in the on-device Settings panel (long-press the mascot).</p>
         </article>
 
         <article class="skill-card">

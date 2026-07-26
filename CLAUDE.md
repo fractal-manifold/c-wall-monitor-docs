@@ -144,11 +144,19 @@ curl -fsSL https://github.com/fractal-manifold/tokenmonitor-mcp/raw/main/tokenmo
 USB-C, 5 V / 1 A. First boot → *Needs Config* screen showing IP +
 6-digit pairing code. → mockup **5 · Needs Config (pairing)**.
 
-**Step 3 — Connect to its captive portal**
-- SSID `TokenMonitor-XXXX`, open.
-- Browser auto-opens `192.168.4.1`.
-- Form: Wi-Fi SSID + password, city.
-- Submit → device reboots into "Waiting for setup".
+**Step 3 — Give it Wi-Fi (three routes, all live at once)**
+The first screen is a selector, not a single instruction:
+- **Setup WiFi** — SoftAP `TokenMonitor-XXXX`, **WPA2** (password on the
+  device's screen; derived from its MAC, so it keeps neighbours out but is
+  not a secret — never say "open network"). Browser auto-opens
+  `192.168.4.1`. Form: Wi-Fi SSID + password **only** (no city, no URL,
+  no passphrase — those come later).
+- **On this device** — scan + on-screen keyboard, no phone needed.
+- **Over USB** — no code to read or type; `/tokenmonitor:configure` pushes
+  Wi-Fi + broker URL + key in one go, collapsing steps 3 and 4. The
+  6-digit code gates the LAN path only. Linux hosts only for now.
+
+Whichever route: device reboots once into "Waiting for setup".
 
 **Step 4 — Pair from Claude Code** *(the magic moment)*
 - Install plugin (see /plugin).
@@ -213,7 +221,7 @@ points at that launcher (do NOT document a global-PATH `tokenmonitor-mcp`
 ```json
 {
   "name": "tokenmonitor",
-  "version": "0.10.4",
+  "version": "0.10.8",
   "mcpServers": {
     "tokenmonitor": {
       "command": "sh",
@@ -366,8 +374,8 @@ several of them wrong; keep them right.
 
 ## Public links to use
 
-- Kickstarter campaign (every CTA target):
-  `https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk`
+- Kickstarter campaign (every CTA target) — keep the `?ref=` tracking token:
+  `https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk?ref=81tzx4`
 - Broker + MCP server: `https://github.com/fractal-manifold/tokenmonitor-mcp`
 - Marketplace (plugin source): `https://github.com/fractal-manifold/mcp-marketplace` → `plugins/tokenmonitor/`
 - This site's repo: `https://github.com/fractal-manifold/tokenmonitor-docs`

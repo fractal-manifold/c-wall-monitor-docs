@@ -97,7 +97,7 @@ import Layout from '../layouts/Layout.astro';
           <h2>Power the device.</h2>
           <div class="step-rule"></div>
           <p>USB-C, 5 V / 1 A. Any wall charger or USB hub will do — the device draws &lt; 4 W peak with the backlight at full.</p>
-          <p>On first boot, with no Wi-Fi yet stored, the device exposes its own open SSID and shows a <em>Join this Wi-Fi</em> screen with a QR code that opens the captive portal.</p>
+          <p>On first boot, with no Wi-Fi yet stored, the device shows a setup screen offering <strong>three ways in</strong>: join its own access point and use the captive portal, type the Wi-Fi straight into the touchscreen, or push everything over a USB cable. Pick whichever suits you — the device listens on all three at once.</p>
           <div class="callout">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/></svg>
             <div>
@@ -123,18 +123,20 @@ import Layout from '../layouts/Layout.astro';
           <div class="step-num">03</div>
           <h2>Connect to its captive portal.</h2>
           <div class="step-rule"></div>
-          <p>The device exposes an open Wi-Fi SSID — your phone or laptop auto-opens the portal at <code class="inline-code">192.168.4.1</code>.</p>
+          <p>The device raises its own WPA2 access point and serves a captive portal at <code class="inline-code">192.168.4.1</code>.</p>
           <ul>
             <li>SSID: <code class="inline-code">TokenMonitor-XXXX</code> (last 4 = MAC suffix)</li>
+            <li>Password: shown on the device's screen, alongside a QR code for the portal address</li>
             <li>Pick (or type) your home Wi-Fi SSID + password</li>
             <li>Submit → device reboots and shows its IP + 6-digit pairing code</li>
           </ul>
+          <p><strong>Prefer not to use another device?</strong> Tap <em>On this device</em> on the setup screen instead and type the Wi-Fi on the touchscreen — same result, no phone involved.</p>
           <p>Broker URL, key and city are configured in the next step from your AI agent.</p>
           <div class="callout">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
             <div>
-              <strong>Why is it an open network?</strong>
-              <span>Only the Wi-Fi join is unauthenticated, and only for the ~30 s of provisioning. The actual broker channel that follows is HMAC + AES-CTR encrypted with your passphrase-derived PSK.</span>
+              <strong>Is the setup network secure?</strong>
+              <span>It is WPA2, with a password unique to your unit and shown only on its screen — so a neighbour cannot join it. The password is derived from the device's own MAC address rather than being a secret, so treat the portal page as readable by anyone already on that network; nothing sensitive is pre-filled there. The broker channel that follows is HMAC + AES-CTR encrypted with your passphrase-derived PSK.</span>
             </div>
           </div>
         </div>
@@ -195,6 +197,13 @@ import Layout from '../layouts/Layout.astro';
             <div>
               <strong>What about Codex / Antigravity?</strong>
               <span>Same skill, same UX, different CLI. See <a href="/plugin.html" style="color: var(--color-gold-light)">plugin install</a> for the per-CLI snippet.</span>
+            </div>
+          </div>
+          <div class="callout">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12"/><circle cx="12" cy="19" r="2"/><path d="M8 8l4-5 4 5"/><path d="M7 12h10"/></svg>
+            <div>
+              <strong>No shared network? Use the cable.</strong>
+              <span>Plug the device into your computer over USB and the same <code class="inline-code">/tokenmonitor:configure</code> works without any network at all — it carries Wi-Fi, broker URL and key in one push, so steps 3 and 4 collapse into one. There is no code to read or type over the cable &mdash; plugging it in <em>is</em> the proof you are standing in front of the device, so the 6-digit code applies to the LAN path only. It is also how you change a configured device's Wi-Fi later, and the way out of guest networks and VLANs that block mDNS. Serial provisioning currently requires a <strong>Linux</strong> host; on macOS or Windows use the captive portal above.</span>
             </div>
           </div>
         </div>

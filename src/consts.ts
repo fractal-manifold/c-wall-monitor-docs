@@ -22,8 +22,10 @@ export const NAV = [
 //      "emailed the moment it opens" line, and the meta description
 //   5. faq.astro — the "Can I buy one yet?" answer and the closing CTA
 export const ANNOUNCE_KEY = 'tmon:announce:prelaunch';
+// `?ref=` is Kickstarter's conversion-tracking token — keep it on the URL so
+// referrals from this site are attributed to the campaign's website source.
 export const KICKSTARTER_URL =
-  'https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk';
+  'https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk?ref=81tzx4';
 export const KICKSTARTER_CTA = 'Follow on Kickstarter';
 
 export const LEGAL =

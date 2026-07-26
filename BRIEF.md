@@ -121,13 +121,28 @@ Config* screen.
 → Show mockup **5 · Needs Config (pairing)** with the IP +
 6-digit pairing code visible.
 
-### Step 3 — Connect to its captive portal
+### Step 3 — Give it Wi-Fi (three routes, all live at once)
 
-- Device exposes Wi-Fi SSID `TokenMonitor-XXXX`, open.
-- Browser auto-opens `192.168.4.1`.
-- Form: Wi-Fi SSID + password, city.
-- Submit → device reboots into "Waiting for setup".
-→ Designer to draw minimal captive-portal screenshot.
+The first screen is a selector. All three routes are listening
+simultaneously; the user picks whichever is convenient.
+
+- **Setup WiFi** — device exposes Wi-Fi SSID `TokenMonitor-XXXX`,
+  **WPA2-protected**. The password is shown on the device's screen.
+  (It is derived from the device's MAC, so it keeps neighbours out but
+  is not a secret — never describe this network as "open".)
+  Browser auto-opens `192.168.4.1`. Form: Wi-Fi SSID + password
+  **only** — city, broker URL and passphrase are not asked here.
+- **On this device** — scan the air and type the password on the
+  touchscreen. No phone or laptop involved at all.
+- **Over USB** — nothing to read or type: plug into a computer and run
+  `/tokenmonitor:configure`, which pushes Wi-Fi, broker URL and key in one
+  payload, so steps 3 and 4 become one step. No pairing code is involved
+  (the cable is the physical-presence proof; the 6-digit code is for the
+  LAN path only). Serial provisioning is Linux-only for now.
+
+- Submit → device reboots **once** into "Waiting for setup".
+→ Designer to draw the 3-route selector plus a minimal captive-portal
+  screenshot.
 
 ### Step 4 — Pair from Claude Code *(the magic moment)*
 

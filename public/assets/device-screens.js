@@ -299,97 +299,102 @@
     </div>`;
   }
 
-  /* ────────────── Needs Config (pairing) ──────────────── */
+  /* ────────────── Needs Config (pairing) ────────────────
+     Mirrors the redesigned screen_needs_config.c: root pad 14, column of
+     header 56 / code hero 152 / action 112 / footer 32 / meta 24 with 18 px
+     gaps. No byline (it lives on the splash), no IP card (the address is
+     quiet chrome in the meta row, and on the real device it is hidden until
+     DHCP settles), and the install pointer is the short site URL — the old
+     GitHub path had to be shrunk to 14 px and ellipsized to fit. */
   function needsConfigHtml() {
     return `
     <div class="tmon-screen pal-fm">
       <div class="abs" style="left:14px; top:14px; width:56px; height:56px; border-radius:10px; background:var(--card-alt); display:flex; align-items:center; justify-content:center">${fmMark(44)}</div>
-      <div class="t22sb c-text abs" style="left:84px; top:18px">TokenMonitor</div>
-      <div class="t18 c-text-dim abs" style="left:84px; top:48px">Pair from your AI agent</div>
-      <div class="card-box abs" style="left:14px; top:84px; width:452px; height:66px; padding:10px 14px">
-        <div class="t18 c-text-dim abs" style="left:14px; top:8px">IP address</div>
-        <div class="t22sb c-accent abs" style="left:14px; bottom:8px">192.168.1.42</div>
+      <div class="t22sb c-text abs" style="left:84px; top:16px">TokenMonitor</div>
+      <div class="t18sb c-text-dim abs" style="left:84px; top:46px">Pairing</div>
+      <div class="card-box abs" style="left:14px; top:88px; width:452px; height:152px; background:var(--card-alt); border:2px solid var(--accent)">
+        <div class="t18sb c-text-dim abs" style="left:0; right:0; top:18px; text-align:center">Pairing code</div>
+        <div class="t48 c-accent abs" style="left:0; right:0; top:62px; text-align:center; letter-spacing:4px">428 715</div>
       </div>
-      <div class="card-box abs" style="left:14px; top:162px; width:452px; height:120px; background:var(--card-alt); border:2px solid var(--accent); box-sizing:border-box; padding:10px 14px">
-        <div class="t22sb c-text abs" style="left:0; right:0; top:10px; text-align:center">Pairing code</div>
-        <div class="t48 c-accent abs" style="left:0; right:0; bottom:6px; text-align:center; letter-spacing:0.08em">428 715</div>
+      <div class="card-box abs" style="left:14px; top:258px; width:452px; height:112px">
+        <div class="t18sb c-text-dim abs" style="left:13px; top:13px">In your AI agent, run</div>
+        <div class="t22sb c-text abs" style="left:13px; top:41px">/tokenmonitor:configure</div>
+        <div class="t18sb c-text-dim abs" style="left:13px; top:77px">Help: tokenmonitor.dev/setup</div>
       </div>
-      <div class="card-box abs" style="left:14px; top:294px; width:452px; height:76px; padding:10px 14px">
-        <div class="t18 c-text abs" style="left:14px; top:8px">On your AI agent run <b style="font-weight:600">/tokenmonitor:configure</b></div>
-        <div class="t18 c-text-dim abs" style="left:14px; bottom:8px">Plugin: github.com/fractal-manifold/mcp-marketplace</div>
-      </div>
-      <div class="abs" style="left:14px; right:14px; bottom:38px; height:32px; display:flex; align-items:center; justify-content:center; gap:10px">
+      <div class="abs" style="left:14px; right:14px; top:388px; height:32px; display:flex; align-items:center; justify-content:center; gap:10px">
         <div class="tmon-spinner" style="width:24px; height:24px"></div>
         <span class="t18sb c-text-dim">Waiting for setup…</span>
       </div>
-      <div class="t18 c-text-dim abs" style="left:0; right:0; bottom:10px; text-align:center">by Fractal Manifold</div>
+      <div class="abs" style="left:14px; right:14px; top:438px; height:24px">
+        <div class="t18sb c-text abs" style="left:0; top:0">192.168.1.42</div>
+        <div class="t18 c-text-dim abs" style="right:0; top:0">CWM-S1-DEV-2620-000123-4</div>
+      </div>
     </div>`;
   }
 
-  /* ────────────── Provisioning (captive) ──────────────── */
+  /* ────────────── Provisioning (first-boot setup) ────────────────
+     Mirrors the redesigned screen_provisioning.c: a selector of THREE routes,
+     not the single captive-portal flow it used to be. Root pad 12 -> 456
+     usable, header 56, three cards of 100, footer 30, 8 px gaps.
+
+     Route 3 deliberately shows "No code needed" where a pairing code used to
+     be: the cable is its own physical-presence proof, so the serial transport
+     applies a payload without one. The code still exists and still gates the
+     LAN — see the Pairing screen above, which is where it is actually used. */
   function provisioningHtml() {
     return `
     <div class="tmon-screen pal-fm">
-      <div class="abs" style="left:14px; top:14px; width:50px; height:50px; border-radius:10px; background:var(--card-alt); display:flex; align-items:center; justify-content:center">${fmMark(40)}</div>
-      <div class="t22sb c-text abs" style="left:76px; top:18px">TokenMonitor</div>
-      <div class="t18 c-text-dim abs" style="left:76px; top:44px">Setup</div>
-      <div class="card-box abs" style="left:14px; top:72px; width:452px; height:64px; padding:10px 12px">
-        <div class="abs" style="left:12px; top:12px; width:40px; height:40px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center">
+      <div class="abs" style="left:12px; top:12px; width:56px; height:56px; border-radius:10px; background:var(--card-alt); display:flex; align-items:center; justify-content:center">${fmMark(44)}</div>
+      <div class="t22sb c-text abs" style="left:82px; top:14px">TokenMonitor</div>
+      <div class="t18sb c-text-dim abs" style="left:82px; top:44px">Choose how to set up</div>
+      <div class="card-box abs" style="left:12px; top:76px; width:456px; height:100px">
+        <div class="abs" style="left:10px; top:8px; width:32px; height:32px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center">
           <span class="t22sb" style="color:#fff">1</span>
         </div>
-        <div class="t18 c-text-dim abs" style="left:64px; top:8px">Join this Wi-Fi</div>
-        <div class="t22sb c-text abs" style="left:64px; bottom:8px">TokenMonitor-3C7C</div>
+        <div class="t22sb c-text abs" style="left:54px; top:8px">Join the setup WiFi</div>
+        <div class="t18sb c-text-dim abs" style="left:54px; top:36px">From a phone or laptop</div>
+        <div class="t22sb abs" style="left:54px; bottom:8px; color:var(--accent-2)">TokenMonitor-3C7C</div>
+        <div class="t18sb c-text-dim abs" style="right:10px; top:42px">&rsaquo;</div>
       </div>
-      <div class="card-box abs" style="left:14px; top:144px; width:452px; height:64px; padding:10px 12px">
-        <div class="abs" style="left:12px; top:12px; width:40px; height:40px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center">
+      <div class="card-box abs" style="left:12px; top:184px; width:456px; height:100px">
+        <div class="abs" style="left:10px; top:8px; width:32px; height:32px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center">
           <span class="t22sb" style="color:#fff">2</span>
         </div>
-        <div class="t18 c-text-dim abs" style="left:64px; top:8px">Scan QR or open URL</div>
-        <div class="t22sb c-text abs" style="left:64px; bottom:8px">http://192.168.4.1/</div>
+        <div class="t22sb c-text abs" style="left:54px; top:8px">Enter WiFi here</div>
+        <div class="t18sb c-text-dim abs" style="left:54px; top:36px">Scan and type on this screen</div>
+        
+        <div class="t18sb c-text-dim abs" style="right:10px; top:42px">&rsaquo;</div>
       </div>
-      <div class="abs" style="left:50%; top:218px; transform:translateX(-50%); width:144px; height:144px; background:#faf9f5; border-radius:10px; padding:8px; box-sizing:border-box; display:flex; align-items:center; justify-content:center">
-        <svg width="128" height="128" viewBox="0 0 21 21" shape-rendering="crispEdges">
-          <rect width="21" height="21" fill="#faf9f5"/>
-          <g fill="#141413">
-            <rect x="0" y="0" width="7" height="7"/><rect x="1" y="1" width="5" height="5" fill="#faf9f5"/><rect x="2" y="2" width="3" height="3"/>
-            <rect x="14" y="0" width="7" height="7"/><rect x="15" y="1" width="5" height="5" fill="#faf9f5"/><rect x="16" y="2" width="3" height="3"/>
-            <rect x="0" y="14" width="7" height="7"/><rect x="1" y="15" width="5" height="5" fill="#faf9f5"/><rect x="2" y="16" width="3" height="3"/>
-            <rect x="8" y="0" width="1" height="1"/><rect x="10" y="0" width="2" height="1"/>
-            <rect x="8" y="2" width="1" height="3"/><rect x="11" y="3" width="1" height="2"/>
-            <rect x="9" y="6" width="3" height="1"/><rect x="13" y="6" width="1" height="1"/>
-            <rect x="0" y="8" width="2" height="1"/><rect x="3" y="8" width="1" height="2"/>
-            <rect x="5" y="9" width="2" height="1"/><rect x="8" y="8" width="3" height="2"/>
-            <rect x="12" y="8" width="1" height="3"/><rect x="14" y="9" width="2" height="1"/>
-            <rect x="16" y="8" width="2" height="2"/><rect x="19" y="9" width="2" height="1"/>
-            <rect x="0" y="11" width="1" height="2"/><rect x="2" y="12" width="3" height="1"/>
-            <rect x="6" y="11" width="1" height="2"/><rect x="9" y="12" width="2" height="1"/>
-            <rect x="12" y="11" width="2" height="2"/><rect x="15" y="12" width="2" height="1"/>
-            <rect x="18" y="11" width="1" height="2"/><rect x="20" y="13" width="1" height="2"/>
-            <rect x="8" y="14" width="1" height="3"/><rect x="10" y="15" width="2" height="1"/>
-            <rect x="13" y="14" width="2" height="2"/><rect x="16" y="14" width="3" height="1"/>
-            <rect x="8" y="18" width="3" height="1"/><rect x="12" y="17" width="1" height="3"/>
-            <rect x="14" y="18" width="2" height="2"/><rect x="17" y="17" width="1" height="3"/>
-            <rect x="19" y="18" width="2" height="1"/>
-          </g>
-        </svg>
+      <div class="card-box abs" style="left:12px; top:292px; width:456px; height:100px">
+        <div class="abs" style="left:10px; top:8px; width:32px; height:32px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center">
+          <span class="t22sb" style="color:#fff">3</span>
+        </div>
+        <div class="t22sb c-text abs" style="left:54px; top:8px">Set up over USB</div>
+        <div class="t18sb c-text-dim abs" style="left:54px; top:36px">From the computer it is plugged into</div>
+        <div class="t22sb abs" style="left:54px; bottom:8px; color:var(--accent-2)">No code needed</div>
+        <div class="t18sb c-text-dim abs" style="right:10px; top:42px">&rsaquo;</div>
       </div>
-      <div class="abs" style="left:14px; right:14px; bottom:38px; height:32px; display:flex; align-items:center; justify-content:center; gap:10px">
-        <div class="tmon-spinner" style="width:24px; height:24px"></div>
-        <span class="t18sb c-text-dim">Waiting for Wi-Fi credentials…</span>
+      <div class="abs" style="left:12px; right:12px; top:404px; height:30px; display:flex; align-items:center; justify-content:center; gap:10px">
+        <div class="tmon-spinner" style="width:26px; height:26px"></div>
+        <span class="t18sb c-text-dim">Waiting for WiFi credentials…</span>
       </div>
-      <div class="t18 c-text-dim abs" style="left:0; right:0; bottom:10px; text-align:center">by Fractal Manifold</div>
     </div>`;
   }
+  }
 
-  /* ────────────── Connecting / Saving ──────────────── */
+  /* ────────────── Connecting / Saving ────────────────
+     Mirrors screen_saving.c: logo / wordmark 22sb / status 18sb dim / sub
+     18sb dim / 28 px spinner, at the firmware's centre offsets
+     (-100 / -20 / +20 / +50 / +100). No byline — screen_saving.c and
+     screen_ota.c never had one, only this mock did. */
   function statusScreenHtml(title, sub) {
     return `
     <div class="tmon-screen pal-fm">
-      <div class="abs" style="left:50%; transform:translateX(-50%); top:140px; width:80px; height:80px; border-radius:14px; background:var(--card-alt); display:flex; align-items:center; justify-content:center">${fmMark(58)}</div>
-      <div class="t30 c-text abs" style="left:0; right:0; top:240px; text-align:center; line-height:34px">${title}</div>
-      <div class="t22sb c-text-dim abs" style="left:0; right:0; top:282px; text-align:center; line-height:26px">${sub}</div>
-      <div class="abs" style="left:50%; transform:translateX(-50%); top:320px"><div class="tmon-spinner"></div></div>
-      <div class="t18 c-text-dim abs" style="left:0; right:0; bottom:14px; text-align:center">by Fractal Manifold</div>
+      <div class="abs" style="left:50%; transform:translateX(-50%); top:112px; width:56px; height:56px; border-radius:10px; background:var(--card-alt); display:flex; align-items:center; justify-content:center">${fmMark(44)}</div>
+      <div class="t22sb c-text abs" style="left:0; right:0; top:206px; text-align:center">TokenMonitor</div>
+      <div class="t18sb c-text-dim abs" style="left:0; right:0; top:249px; text-align:center">${title}</div>
+      <div class="t18sb c-text-dim abs" style="left:0; right:0; top:279px; text-align:center">${sub}</div>
+      <div class="abs" style="left:50%; transform:translateX(-50%); top:326px"><div class="tmon-spinner"></div></div>
     </div>`;
   }
 
@@ -561,7 +566,7 @@
     'loading-day':   () => standbyHtml('pal-claude-day', '16:24', 'Thu 14 May', '21.6 °C', true),
     'loading-night': () => standbyHtml('pal-claude-night', '23:04', 'Thu 14 May', '19.1 °C', true),
     'connecting':    () => standbyHtml('pal-claude-day', '16:24', 'Thu 14 May', '21.6 °C', true),
-    'saving':        () => statusScreenHtml('Saving…', 'Applying your settings and rebooting'),
+    'saving':        () => statusScreenHtml('Saving…', 'The device will reboot.'),
     'needs-config':  () => needsConfigHtml(),
     'provisioning':  () => provisioningHtml(),
     /* day/night share the 'top' scroll position (palette-only difference, so
