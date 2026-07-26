@@ -6,6 +6,27 @@ import Header from '../components/Header.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import LegalFooter from '../components/LegalFooter.astro';
 import { SITE, ANNOUNCE_KEY } from '../consts';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+
+/* Content hash for /assets/device-screens.js.
+ *
+ * The file lives in public/, so Astro copies it through verbatim — no
+ * fingerprint in the name — and GitHub Pages serves it with
+ * `cache-control: max-age=14400`. A deploy therefore publishes new HTML
+ * against up to four hours of stale JS. That is not theoretical: the deploy
+ * that fixed a SyntaxError in this very file left the live site still broken,
+ * because the edge kept handing out the broken copy while the new HTML went
+ * out immediately.
+ *
+ * Hashing the contents into a query string makes the URL change exactly when
+ * the file does, so the edge is forced to refetch on the deploy that matters
+ * and keeps caching aggressively the rest of the time. Read at build time
+ * only — this runs in the Astro frontmatter, never in the browser. */
+const deviceScreensSrc = (() => {
+  const bytes = readFileSync(new URL('../../public/assets/device-screens.js', import.meta.url));
+  return `/assets/device-screens.js?v=${createHash('sha256').update(bytes).digest('hex').slice(0, 12)}`;
+})();
 
 const {
   title,
@@ -66,6 +87,6 @@ const ogImageUrl = new URL(ogImage, SITE).href;
   </main>
   {legal && <LegalFooter />}
   <SiteFooter />
-  {usesDeviceScreens && <script is:inline src="/assets/device-screens.js"></script>}
+  {usesDeviceScreens && <script is:inline src={deviceScreensSrc}></script>}
 </body>
 </html>
