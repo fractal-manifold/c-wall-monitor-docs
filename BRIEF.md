@@ -126,23 +126,30 @@ Config* screen.
 The first screen is a selector. All three routes are listening
 simultaneously; the user picks whichever is convenient.
 
-- **Setup WiFi** — device exposes Wi-Fi SSID `TokenMonitor-XXXX`,
+The card labels below are the device's own wording; use them verbatim on the
+site so the page and the screen agree.
+
+- **Join the setup WiFi** — device exposes Wi-Fi SSID `TokenMonitor-XXXX`,
   **WPA2-protected**. The password is shown on the device's screen.
   (It is derived from the device's MAC, so it keeps neighbours out but
   is not a secret — never describe this network as "open".)
   Browser auto-opens `192.168.4.1`. Form: Wi-Fi SSID + password
   **only** — city, broker URL and passphrase are not asked here.
-- **On this device** — scan the air and type the password on the
+- **Enter WiFi here** — scan the air and type the password on the
   touchscreen. No phone or laptop involved at all.
-- **Over USB** — nothing to read or type: plug into a computer and run
+- **Set up over USB** — nothing to read or type: plug into a computer and run
   `/tokenmonitor:configure`, which pushes Wi-Fi, broker URL and key in one
   payload, so steps 3 and 4 become one step. No pairing code is involved
   (the cable is the physical-presence proof; the 6-digit code is for the
   LAN path only). Serial provisioning is Linux-only for now.
 
-- Submit → device reboots **once** into "Waiting for setup".
-→ Designer to draw the 3-route selector plus a minimal captive-portal
-  screenshot.
+- Submit → device reboots **once** into "Waiting for setup" — except the USB
+  route, which already carried broker URL + key and goes straight to the
+  dashboard.
+→ All four screens now exist as live mocks in `device-screens.js`
+  (`provisioning`, `provisioning-softap`, `provisioning-picker`,
+  `provisioning-usb`) plus the captive-portal browser mock in `setup.astro`;
+  nothing here needs drawing by hand.
 
 ### Step 4 — Pair from Claude Code *(the magic moment)*
 

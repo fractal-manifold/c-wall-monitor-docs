@@ -20,7 +20,7 @@ import Layout from '../layouts/Layout.astro';
     <ol class="stepper">
       <li><a href="#step-1"><div class="num">Step 01</div><div class="lbl">Install the MCP plugin</div></a></li>
       <li><a href="#step-2"><div class="num">Step 02</div><div class="lbl">Power the device</div></a></li>
-      <li><a href="#step-3"><div class="num">Step 03</div><div class="lbl">Captive portal</div></a></li>
+      <li><a href="#step-3"><div class="num">Step 03</div><div class="lbl">Give it Wi-Fi</div></a></li>
       <li><a href="#step-4"><div class="num">Step 04</div><div class="lbl">Pair from your AI</div></a></li>
       <li><a href="#step-5"><div class="num">Step 05</div><div class="lbl">You're done</div></a></li>
       <li class="optional"><a href="#custom-panel"><div class="num">Step 06 · optional</div><div class="lbl">Your own panel</div></a></li>
@@ -115,63 +115,111 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ── Step 3: Captive portal ─────────────────────────── -->
+  <!-- ── Step 3: Wi-Fi, three routes ────────────────────── -->
   <section class="step-block" id="step-3">
     <div class="container">
-      <div class="step-inner">
-        <div class="step-text-col">
-          <div class="step-num">03</div>
-          <h2>Connect to its captive portal.</h2>
-          <div class="step-rule"></div>
-          <p>The device raises its own WPA2 access point and serves a captive portal at <code class="inline-code">192.168.4.1</code>.</p>
+      <div class="step-num">03</div>
+      <h2>Give it Wi-Fi. <span style="color:var(--fg-3); font-size:0.7em">Three routes.</span></h2>
+      <div class="step-rule"></div>
+      <p class="pg-lead">The first screen is a <strong style="color:var(--fg-1)">chooser</strong>, not an instruction. All three routes are live at the same time — the device is running its own access point, listening on the touchscreen and watching the USB cable simultaneously, so you can start down one and switch to another without rebooting. Tap a card and it opens the detail view for that route.</p>
+
+      <div class="routes">
+        <!-- Route 1 -->
+        <div class="route">
+          <div class="device-frame">
+            <div class="screen" data-tmon-screen="provisioning-softap"></div>
+          </div>
+          <div class="route-head"><span class="route-n">1</span><h3>Join the setup WiFi</h3></div>
+          <p>The classic route: another device does the typing. The unit raises its own access point and serves a captive portal at <code class="inline-code">192.168.4.1</code>.</p>
           <ul>
-            <li>SSID: <code class="inline-code">TokenMonitor-XXXX</code> (last 4 = MAC suffix)</li>
-            <li>Password: shown on the device's screen, alongside a QR code for the portal address</li>
-            <li>Pick (or type) your home Wi-Fi SSID + password</li>
-            <li>Submit → device reboots and shows its IP + 6-digit pairing code</li>
+            <li>SSID <code class="inline-code">TokenMonitor-XXXX</code> — last 4 = MAC suffix</li>
+            <li>Password shown on the screen, next to a QR for the portal address</li>
+            <li>The portal asks for your Wi-Fi SSID + password, nothing else</li>
           </ul>
-          <p><strong>Prefer not to use another device?</strong> Tap <em>On this device</em> on the setup screen instead and type the Wi-Fi on the touchscreen — same result, no phone involved.</p>
-          <p>Broker URL, key and city are configured in the next step from your AI agent.</p>
-          <div class="callout">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
-            <div>
-              <strong>Is the setup network secure?</strong>
-              <span>It is WPA2, with a password unique to your unit and shown only on its screen — so a neighbour cannot join it. The password is derived from the device's own MAC address rather than being a secret, so treat the portal page as readable by anyone already on that network; nothing sensitive is pre-filled there. The broker channel that follows is HMAC + AES-CTR encrypted with your passphrase-derived PSK.</span>
-            </div>
-          </div>
+          <p class="route-note">Best when the device is on a wall wart rather than plugged into a computer.</p>
         </div>
-        <div class="step-visual-col">
-          <div class="portal-mock">
-            <div class="browser-bar">
-              <span class="dot-mac"></span><span class="dot-mac"></span><span class="dot-mac"></span>
-              <span class="url"><span class="lock">⚠</span>192.168.4.1</span>
-            </div>
-            <div class="portal-body">
-              <div class="portal-mascot">
-                <img src="/assets/logo.png" alt="">
-                <div class="title-block">
-                  <h3>TokenMonitor</h3>
-                  <p class="sub">Setup</p>
-                </div>
-              </div>
-              <div class="portal-field">
-                <label>WiFi network</label>
-                <select disabled>
-                  <option>FractalHome</option>
-                  <option>Other (type manually)</option>
-                </select>
-              </div>
-              <div class="portal-field">
-                <label>WiFi password</label>
-                <input type="password" value="••••••••••••" readonly>
-              </div>
-              <button class="portal-submit" type="button">Save and reboot</button>
-              <div class="portal-note">After saving, the device reboots and shows its IP and a <strong>6-digit pairing code</strong> on screen. Then run <code>/tokenmonitor:configure</code> from your AI agent on the same LAN and enter the code to finish setup (broker URL, key and city).</div>
-              <p class="portal-byline">by Fractal Manifold</p>
-            </div>
+
+        <!-- Route 2 -->
+        <div class="route">
+          <div class="device-frame">
+            <div class="screen" data-tmon-screen="provisioning-picker"></div>
           </div>
+          <div class="route-head"><span class="route-n">2</span><h3>Enter WiFi here</h3></div>
+          <p>No phone involved. The panel is 480×480 capacitive — it scans, you tap your network and type the password on an on-screen keyboard.</p>
+          <ul>
+            <li>Sorted strongest-first, open networks flagged</li>
+            <li><em>Manual</em> for a hidden SSID, <em>Rescan</em> if yours hasn't appeared</li>
+            <li>Same picker Settings opens later to change networks</li>
+          </ul>
+          <p class="route-note">Fastest when you are already standing in front of the unit.</p>
+        </div>
+
+        <!-- Route 3 -->
+        <div class="route">
+          <div class="device-frame">
+            <div class="screen" data-tmon-screen="provisioning-usb"></div>
+          </div>
+          <div class="route-head"><span class="route-n">3</span><h3>Set up over USB</h3></div>
+          <p>The cable it already draws power from is also a data link. One command from your agent pushes Wi-Fi, broker URL and key together — <strong style="color:var(--fg-1)">steps 3 and 4 collapse into one</strong>.</p>
+          <ul>
+            <li><strong>No pairing code.</strong> Plugging it in <em>is</em> the proof you are standing in front of it</li>
+            <li>Works with no shared network at all — before the device has ever seen Wi-Fi</li>
+            <li>Also how you move a configured device onto a new network later</li>
+          </ul>
+          <p class="route-note">Linux hosts only for now; on macOS or Windows use route 1 or 2.</p>
         </div>
       </div>
+
+      <!-- The portal itself, belonging to route 1. Kept as its own figure
+           rather than crammed into that column: it is a browser window, not a
+           device screen, and it is the one thing in this step that appears on
+           a machine the reader is holding. -->
+      <div class="portal-figure">
+        <div class="portal-mock">
+          <div class="browser-bar">
+            <span class="dot-mac"></span><span class="dot-mac"></span><span class="dot-mac"></span>
+            <span class="url"><span class="lock">⚠</span>192.168.4.1</span>
+          </div>
+          <div class="portal-body">
+            <div class="portal-mascot">
+              <img src="/assets/logo.png" alt="">
+              <div class="title-block">
+                <h3>TokenMonitor</h3>
+                <p class="sub">Setup</p>
+              </div>
+            </div>
+            <div class="portal-field">
+              <label>WiFi network</label>
+              <select disabled>
+                <option>FractalHome</option>
+                <option>Other (type manually)</option>
+              </select>
+            </div>
+            <div class="portal-field">
+              <label>WiFi password</label>
+              <input type="password" value="••••••••••••" readonly>
+            </div>
+            <button class="portal-submit" type="button">Save and reboot</button>
+            <div class="portal-note">After saving, the device reboots and shows its IP and a <strong>6-digit pairing code</strong> on screen. Then run <code>/tokenmonitor:configure</code> from your AI agent on the same LAN and enter the code to finish setup (broker URL, key and city).</div>
+            <p class="portal-byline">by Fractal Manifold</p>
+          </div>
+        </div>
+        <div class="portal-caption">
+          <h4>Route 1 — what the portal looks like</h4>
+          <p>Joining <code class="inline-code">TokenMonitor-XXXX</code> pops this page up on its own; if it doesn't, open <code class="inline-code">192.168.4.1</code> by hand.</p>
+          <p>It asks for two things and no more. Broker URL, key and city are <strong style="color:var(--fg-1)">not</strong> here — they come from your agent in step 4, over a signed channel, so nothing sensitive is ever typed into a page anyone on that access point could read.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 2rem">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+        <div>
+          <strong>Is the setup network secure?</strong>
+          <span>It is WPA2, with a password unique to your unit and shown only on its screen — so a neighbour cannot join it. The password is derived from the device's own MAC address rather than being a secret, so treat the portal page as readable by anyone already on that network; nothing sensitive is pre-filled there. The broker channel that follows is HMAC-signed, with the config blob AES-CTR encrypted under your passphrase-derived PSK.</span>
+        </div>
+      </div>
+
+      <p style="margin-top: 1.5rem">Whichever route you take, the device reboots once and lands on <em>Waiting for setup</em> — except route 3, which already carried the broker URL and key across the cable and goes straight to the dashboard.</p>
     </div>
   </section>
 
@@ -202,8 +250,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="callout">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12"/><circle cx="12" cy="19" r="2"/><path d="M8 8l4-5 4 5"/><path d="M7 12h10"/></svg>
             <div>
-              <strong>No shared network? Use the cable.</strong>
-              <span>Plug the device into your computer over USB and the same <code class="inline-code">/tokenmonitor:configure</code> works without any network at all — it carries Wi-Fi, broker URL and key in one push, so steps 3 and 4 collapse into one. There is no code to read or type over the cable &mdash; plugging it in <em>is</em> the proof you are standing in front of the device, so the 6-digit code applies to the LAN path only. It is also how you change a configured device's Wi-Fi later, and the way out of guest networks and VLANs that block mDNS. Serial provisioning currently requires a <strong>Linux</strong> host; on macOS or Windows use the captive portal above.</span>
+              <strong>Took route 3? You are already done.</strong>
+              <span>The cable carried Wi-Fi, broker URL and key in one push, so this step already happened — there is nothing to discover and no code to type. The 6-digit code on this page gates the <strong>LAN</strong> path only; over USB, plugging it in <em>is</em> the proof you are standing in front of the device. That also makes the cable the way out of guest networks and VLANs that block mDNS. See <a href="#step-3" style="color: var(--color-gold-light)">route 3</a> above.</span>
             </div>
           </div>
         </div>
@@ -788,6 +836,54 @@ while True:
   .install-tabs { margin-top: 1.5rem; }
   .install-panel { display: none; }
   .install-panel.active { display: block; }
+
+  /* ── Step 3's three routes — one column per card on the device's
+        selector, each led by the detail screen that card opens.
+        Full-width rather than the usual text/visual split: the routes are
+        siblings, and stacking them as five-paragraph prose would recreate
+        exactly the "which one is mine?" problem the device's chooser
+        screen exists to solve. ─────────────────────────────────── */
+  .routes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+    align-items: start;
+  }
+  .routes .device-frame { margin-bottom: 1.25rem; }
+  .route-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.6rem; }
+  .route-head h3 { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+  .route-n {
+    flex: none;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--color-purple); color: #fff;
+    font-size: 0.85rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .route p { font-size: 0.94rem; line-height: 1.65; color: var(--fg-2); }
+  .route ul { margin: 0.75rem 0 0; padding-left: 1.1rem; }
+  .route li { font-size: 0.9rem; line-height: 1.6; color: var(--fg-2); margin-bottom: 0.35rem; }
+  .route .route-note {
+    margin-top: 0.9rem; padding-top: 0.75rem;
+    border-top: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+    font-size: 0.85rem; color: var(--fg-3);
+  }
+
+  /* The portal figure: browser mock beside its caption. */
+  .portal-figure {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  .portal-caption h4 { font-size: 1.05rem; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+  .portal-caption p { font-size: 0.94rem; line-height: 1.7; color: var(--fg-2); margin-bottom: 0.75rem; }
+
+  @media (max-width: 900px) {
+    .routes { grid-template-columns: 1fr; gap: 2.5rem; }
+    .portal-figure { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
 
   /* ── Captive portal mockup — mirrors the real HTML served by
         firmware/components/net/src/provisioning.c (dark canvas,

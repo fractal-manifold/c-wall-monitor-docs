@@ -145,18 +145,28 @@ USB-C, 5 V / 1 A. First boot → *Needs Config* screen showing IP +
 6-digit pairing code. → mockup **5 · Needs Config (pairing)**.
 
 **Step 3 — Give it Wi-Fi (three routes, all live at once)**
-The first screen is a selector, not a single instruction:
-- **Setup WiFi** — SoftAP `TokenMonitor-XXXX`, **WPA2** (password on the
-  device's screen; derived from its MAC, so it keeps neighbours out but is
+The first screen is a selector, not a single instruction. Use the device's
+own card labels verbatim — they are what the user is looking at:
+- **Join the setup WiFi** — SoftAP `TokenMonitor-XXXX`, **WPA2** (password on
+  the device's screen; derived from its MAC, so it keeps neighbours out but is
   not a secret — never say "open network"). Browser auto-opens
   `192.168.4.1`. Form: Wi-Fi SSID + password **only** (no city, no URL,
   no passphrase — those come later).
-- **On this device** — scan + on-screen keyboard, no phone needed.
-- **Over USB** — no code to read or type; `/tokenmonitor:configure` pushes
-  Wi-Fi + broker URL + key in one go, collapsing steps 3 and 4. The
+- **Enter WiFi here** — scan + on-screen keyboard, no phone needed. Same
+  picker component Settings opens later to change networks.
+- **Set up over USB** — no code to read or type; `/tokenmonitor:configure`
+  pushes Wi-Fi + broker URL + key in one go, collapsing steps 3 and 4. The
   6-digit code gates the LAN path only. Linux hosts only for now.
 
-Whichever route: device reboots once into "Waiting for setup".
+Rendered as a three-column grid, each column led by the detail screen that
+card opens: `provisioning-softap`, `provisioning-picker`, `provisioning-usb`
+(the selector itself is `provisioning`, used in step 2). The selector cards
+carry a number and a name and **nothing else** — no SSID, no "no code needed"
+status line. That is deliberate in the firmware and the mock mirrors it; don't
+re-add status to the chooser.
+
+Whichever route: device reboots once into "Waiting for setup" — except USB,
+which already carried broker URL + key and goes straight to the dashboard.
 
 **Step 4 — Pair from Claude Code** *(the magic moment)*
 - Install plugin (see /plugin).
