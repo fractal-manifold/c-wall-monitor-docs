@@ -231,7 +231,7 @@ points at that launcher (do NOT document a global-PATH `tokenmonitor-mcp`
 ```json
 {
   "name": "tokenmonitor",
-  "version": "0.10.8",
+  "version": "0.11.0",
   "mcpServers": {
     "tokenmonitor": {
       "command": "sh",
