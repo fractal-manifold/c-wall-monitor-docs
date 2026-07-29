@@ -28,5 +28,15 @@ export const KICKSTARTER_URL =
   'https://www.kickstarter.com/projects/jorgemf/token-monitor-see-your-ai-usage-on-your-desk?ref=81tzx4';
 export const KICKSTARTER_CTA = 'Follow on Kickstarter';
 
+// Reddit Ads conversion pixel (components/RedditPixel.astro). The id is the
+// ad account's public pixel id — it ships in the page source by design, it is
+// not a secret. REDDIT_CTA_EVENT is the standard event fired when a visitor
+// clicks through to the campaign; while the campaign is in prelaunch the CTA
+// is a notify-me signup, so it stays 'Lead'. Switch it to 'Purchase' only if
+// the site ever hosts a real checkout — clicking through to Kickstarter is
+// not a purchase.
+export const REDDIT_PIXEL_ID = 'a2_jedy8tmi7s6j';
+export const REDDIT_CTA_EVENT = 'Lead';
+
 export const LEGAL =
   'TokenMonitor is an independent third-party product. Claude™ is a trademark of Anthropic, PBC. Codex is a trademark of OpenAI. Antigravity and Gemini are trademarks of Google LLC. This product is not affiliated with, endorsed by, or sponsored by these companies.';

@@ -106,6 +106,28 @@ the fixed header on every page. Its height feeds `--announce-h`; anything
 that must clear the fixed chrome reads `--chrome-h` (see `global.css`)
 instead of hard-coding pixels.
 
+**Conversion tracking.** Two independent mechanisms, don't confuse them:
+- Kickstarter's own `?ref=81tzx4` token on `KICKSTARTER_URL` — attributes the
+  referral on Kickstarter's side. Keep it on the URL.
+- The **Reddit Ads pixel** (`src/components/RedditPixel.astro`, rendered in
+  `<head>` by the layout, so every page) — fires `PageVisit` on load and
+  `REDDIT_CTA_EVENT` on any click through to a `kickstarter.com` host. The CTA
+  hook is one delegated listener matching on hostname, *not* an `onclick` per
+  button, so new CTAs are tracked automatically — don't add per-button
+  handlers. The event stays **`Lead`** while the campaign is in prelaunch (the
+  CTA is a notify-me follow); it becomes a launch-day item only if the site
+  ever hosts a real checkout — a click through to Kickstarter is not a
+  `Purchase`. The pixel id is public by design; it is not a secret.
+
+Two caveats a future editor needs. **(1)** The pixel currently loads
+unconditionally, with no consent gate, on a site that ships to the EU and UK —
+that is GDPR/ePrivacy exposure the owner accepted knowingly; if a banner ever
+lands, gate the `rdt('init')` call on it. **(2)** The site's "no telemetry, no
+analytics" copy (index, how-it-works, FAQ) is scoped to the **broker and
+device**, which remain analytics-free — the pixel does not contradict it. Keep
+that scoping precise when editing those lines, and don't widen them into a
+claim about the website itself.
+
 ### 2. How it works (`/how-it-works`)
 
 Architecture diagram (Mermaid is fine):

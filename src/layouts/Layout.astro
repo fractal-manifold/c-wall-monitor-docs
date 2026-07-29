@@ -5,6 +5,7 @@ import AnnounceBar from '../components/AnnounceBar.astro';
 import Header from '../components/Header.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import LegalFooter from '../components/LegalFooter.astro';
+import RedditPixel from '../components/RedditPixel.astro';
 import { SITE, ANNOUNCE_KEY } from '../consts';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -77,6 +78,7 @@ const ogImageUrl = new URL(ogImage, SITE).href;
       so applying it here keeps a dismissed bar from flashing and the chrome
       offset from shifting after first paint. */}
   <script is:inline define:vars={{ announceKey: ANNOUNCE_KEY }}>try{var t=localStorage.getItem('tmon:theme');document.documentElement.dataset.theme=(t==='dark')?'dark':'light';}catch(e){document.documentElement.dataset.theme='light';}try{if(localStorage.getItem(announceKey)==='dismissed'){document.documentElement.dataset.announce='off';}}catch(e){}</script>
+  <RedditPixel />
 </head>
 <body data-page={page}>
   <BgStage />

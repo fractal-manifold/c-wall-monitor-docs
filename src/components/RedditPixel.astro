@@ -1,0 +1,43 @@
+---
+/* Reddit Ads conversion pixel.
+ *
+ * Two jobs:
+ *   1. `PageVisit` on every page — Reddit's baseline signal, required for the
+ *      ad account to attribute anything at all.
+ *   2. `Lead` on every campaign CTA click — the conversion we actually
+ *      optimise for. While the campaign is in prelaunch the CTA is
+ *      "Follow on Kickstarter" (a notify-me signup), so `Lead` is the right
+ *      standard event; `Purchase` would be a lie until pledges open.
+ *
+ * The CTA hook is a delegated listener rather than an `onclick` on each
+ * button: the campaign link is rendered in six places (announce bar, header,
+ * hero, theme-lab band, landing close, how-it-works, FAQ) and more will
+ * appear. Matching on the href keeps every one of them tracked without
+ * touching the call sites — see KICKSTARTER_URL in consts.ts.
+ *
+ * No advanced matching (email / phone / externalId) is passed to `init`:
+ * this is a static marketing site with no login and no forms, so there is no
+ * identifier to match on. If a signup form ever lands here, add the hashed
+ * email to the init call then — not before.
+ *
+ * Both scripts must stay `is:inline` so they land in <head> verbatim and fire
+ * before the CTA can be clicked; Astro would otherwise hoist and defer them.
+ */
+import { REDDIT_PIXEL_ID, REDDIT_CTA_EVENT } from '../consts';
+---
+<!-- Reddit Pixel -->
+<script is:inline define:vars={{ pixelId: REDDIT_PIXEL_ID }}>
+!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id="+pixelId,t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init',pixelId);rdt('track', 'PageVisit');
+</script>
+<!-- DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER -->
+<!-- End Reddit Pixel -->
+<script is:inline define:vars={{ ctaEvent: REDDIT_CTA_EVENT }}>
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var host;
+    try { host = new URL(a.href, location.href).hostname; } catch (err) { return; }
+    if (host !== 'kickstarter.com' && !host.endsWith('.kickstarter.com')) return;
+    if (window.rdt) rdt('track', ctaEvent);
+  }, true);
+</script>
