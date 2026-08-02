@@ -14,44 +14,57 @@ import Section from '../components/Section.astro';
       <p class="eyebrow">Plugin · skills · tools</p>
       <h1>One MCP plugin.<br>Three AI ecosystems.</h1>
       <div class="rule"></div>
-      <p class="lead">The <code class="inline-code">tokenmonitor</code> plugin ships through Fractal Manifold's MCP marketplace. Claude, Codex and Antigravity each install it from the command line — and for Claude and Codex, from the desktop app too. Pick your ecosystem below, then jump to the <a href="#skills" style="color:var(--color-gold-light)">skills &amp; tools reference</a>.</p>
+      <p class="lead">The <code class="inline-code">tokenmonitor</code> plugin ships through Fractal Manifold's MCP marketplace. Claude, Codex and Antigravity each install it from the command line — and for Claude and Codex, from the desktop app too. Pick your ecosystem below, then the route you prefer, and jump to the <a href="#skills" style="color:var(--color-gold-light)">skills &amp; tools reference</a> when you're set up.</p>
 
-      <div class="cli-tabs">
-        <button type="button" class="cli-tab claude active" data-cli="claude">
+      <div class="cli-tabs" role="tablist" aria-label="Choose your AI ecosystem">
+        <button type="button" id="clitab-claude" class="cli-tab claude active" data-cli="claude"
+                role="tab" aria-selected="true" aria-controls="clipanel-claude" tabindex="0">
           <span class="swatch claude"></span>
-          <div class="label-block">
-            <h3>Claude</h3>
-          </div>
+          <span class="label">Claude Code</span>
         </button>
-        <button type="button" class="cli-tab codex" data-cli="codex">
+        <button type="button" id="clitab-codex" class="cli-tab codex" data-cli="codex"
+                role="tab" aria-selected="false" aria-controls="clipanel-codex" tabindex="-1">
           <span class="swatch codex"></span>
-          <div class="label-block">
-            <h3>Codex</h3>
-          </div>
+          <span class="label">Codex CLI</span>
         </button>
-        <button type="button" class="cli-tab antigravity" data-cli="antigravity">
+        <button type="button" id="clitab-antigravity" class="cli-tab antigravity" data-cli="antigravity"
+                role="tab" aria-selected="false" aria-controls="clipanel-antigravity" tabindex="-1">
           <span class="swatch antigravity"></span>
-          <div class="label-block">
-            <h3>Antigravity</h3>
-          </div>
+          <span class="label">Antigravity CLI</span>
         </button>
       </div>
 
       <!-- ── Claude Code panel ───────────────────────────────── -->
-      <div class="cli-panel active" data-panel="claude">
+      <div class="cli-panel active" id="clipanel-claude" data-panel="claude"
+           role="tabpanel" aria-labelledby="clitab-claude" tabindex="0">
         <div class="panel-head">
-          <h2>Claude</h2>
+          <h2>Claude Code</h2>
           <span class="marketplace">via <a href="https://github.com/fractal-manifold/mcp-marketplace" target="_blank" rel="noopener">fractal-manifold/mcp-marketplace</a></span>
         </div>
 
-        <div class="method-head"><span class="method-tag">From the command line</span><span class="method-note">Claude Code</span></div>
-        <p class="lead">Claude Code natively supports MCP marketplaces. Two commands — first you add the marketplace, then you install the plugin from it.</p>
+        <!-- Route switcher: terminal vs desktop app -->
+        <div class="route-tabs" role="tablist" aria-label="How to install on Claude">
+          <button type="button" id="route-claude-terminal" class="route-tab active" data-route="terminal"
+                  role="tab" aria-selected="true" aria-controls="routepanel-claude-terminal" tabindex="0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+            Terminal
+          </button>
+          <button type="button" id="route-claude-desktop" class="route-tab" data-route="desktop"
+                  role="tab" aria-selected="false" aria-controls="routepanel-claude-desktop" tabindex="-1">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Desktop app
+          </button>
+        </div>
 
-        <h4>Install</h4>
+        <div class="route-panel active" id="routepanel-claude-terminal" data-route-panel="terminal"
+             role="tabpanel" aria-labelledby="route-claude-terminal" tabindex="0">
+          <p class="route-note">Claude Code natively supports MCP marketplaces. Two commands — first you add the marketplace, then you install the plugin from it.</p>
+
+          <h4>Install</h4>
 <div class="code-block"><span class="prompt" style="color:var(--color-gold)">&gt;</span> /plugin marketplace add fractal-manifold/mcp-marketplace
 <span class="prompt" style="color:var(--color-gold)">&gt;</span> /plugin install tokenmonitor@fractalmanifold-mcp-marketplace</div>
 
-        <h4>What it adds</h4>
+          <h4>What it adds</h4>
 <div class="code-block"><span class="cmt"># Skills (you invoke these)</span>
 /tokenmonitor:configure
 /tokenmonitor:theme <span class="accent" style="color:var(--color-purple-light)">&lt;day|night|auto&gt;</span>
@@ -65,89 +78,140 @@ tokenmonitor_health
 tokenmonitor_recent_logs
 tokenmonitor_provision_hint</div>
 
-        <h4>Where it lives</h4>
-        <p style="font-size: 0.92rem; color: var(--fg-3);">Marketplace entries land in <code class="inline-code">~/.claude/plugins/</code>. Uninstall any time with <code class="inline-code">/plugin uninstall tokenmonitor</code>.</p>
+          <h4>Where it lives</h4>
+          <p class="route-fine">Marketplace entries land in <code class="inline-code">~/.claude/plugins/</code>. Uninstall any time with <code class="inline-code">/plugin uninstall tokenmonitor@fractalmanifold-mcp-marketplace</code>.</p>
+        </div>
 
-        <div class="method-head"><span class="method-tag">From the desktop app</span><span class="method-note">Claude · Settings → Plugins</span></div>
-        <p class="lead">Prefer clicking to typing? The Claude desktop app installs the very same plugin from its Settings panel — no terminal needed.</p>
-        <ol class="gui-steps">
-          <li>Open <strong>Settings → Plugins</strong>, then click <strong>Add ▾</strong> in the top-right and choose <strong>Add marketplace</strong>.</li>
-          <li>Enter the marketplace repo <code class="inline-code">fractal-manifold/mcp-marketplace</code> and confirm.</li>
-          <li>Back in the plugin list, find <strong>Tokenmonitor</strong> by <em>fractal-manifold</em> and click <strong>Install</strong>.</li>
-        </ol>
-        <figure class="shot">
-          <img src="/assets/claude-desktop-add-marketplace.png"
-               alt="Claude desktop Settings → Plugins with the Add menu open, showing the Add marketplace option"
-               width="720" height="232" loading="lazy" decoding="async" />
-          <figcaption>Claude desktop → Settings → Plugins → <strong>Add ▾</strong> → <strong>Add marketplace</strong>.</figcaption>
-        </figure>
+        <div class="route-panel" id="routepanel-claude-desktop" data-route-panel="desktop"
+             role="tabpanel" aria-labelledby="route-claude-desktop" tabindex="0">
+          <p class="route-note">Prefer clicking to typing? The Claude desktop app installs the very same plugin from its Settings panel — same skills, same tools, no terminal needed.</p>
+          <ol class="gui-steps">
+            <li>Open <strong>Settings → Plugins</strong>, then click <strong>Add ▾</strong> in the top-right and choose <strong>Add marketplace</strong>.</li>
+            <li>Enter the marketplace repo <code class="inline-code">fractal-manifold/mcp-marketplace</code> and confirm.</li>
+            <li>Back in the plugin list, find <strong>Tokenmonitor</strong> by <em>fractal-manifold</em> and click <strong>Install</strong>.</li>
+          </ol>
+          <figure class="shot">
+            <img src="/assets/claude-desktop-add-marketplace.png"
+                 alt="Claude desktop Settings → Plugins with the Add menu open, showing the Add marketplace option"
+                 width="720" height="232" loading="lazy" decoding="async" />
+            <figcaption>Claude desktop → Settings → Plugins → <strong>Add ▾</strong> → <strong>Add marketplace</strong>.</figcaption>
+          </figure>
+        </div>
       </div>
 
       <!-- ── Codex CLI panel ─────────────────────────────────── -->
-      <div class="cli-panel" data-panel="codex">
+      <div class="cli-panel" id="clipanel-codex" data-panel="codex"
+           role="tabpanel" aria-labelledby="clitab-codex" tabindex="0">
         <div class="panel-head">
-          <h2>Codex</h2>
-          <span class="marketplace">MCP server on the CLI · full plugin in the app</span>
+          <h2>Codex CLI</h2>
+          <span class="marketplace">via <a href="https://github.com/fractal-manifold/mcp-marketplace" target="_blank" rel="noopener">fractal-manifold/mcp-marketplace</a></span>
         </div>
 
-        <div class="method-head"><span class="method-tag">From the command line</span><span class="method-note">Codex CLI · config.toml</span></div>
-        <p class="lead">Codex CLI reads MCP servers from <code class="inline-code">~/.codex/config.toml</code>. One command registers the broker so Codex can call the <code class="inline-code">tokenmonitor_*</code> tools — install the <code class="inline-code">tokenmonitor-mcp</code> broker first (see <a href="/setup.html" style="color:var(--color-gold-light)">Setup</a>).</p>
+        <!-- Route switcher: terminal vs desktop app -->
+        <div class="route-tabs" role="tablist" aria-label="How to install on Codex">
+          <button type="button" id="route-codex-terminal" class="route-tab active" data-route="terminal"
+                  role="tab" aria-selected="true" aria-controls="routepanel-codex-terminal" tabindex="0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+            Terminal
+          </button>
+          <button type="button" id="route-codex-desktop" class="route-tab" data-route="desktop"
+                  role="tab" aria-selected="false" aria-controls="routepanel-codex-desktop" tabindex="-1">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Desktop app
+          </button>
+        </div>
 
-        <h4>Register the broker</h4>
-<div class="code-block"><span class="prompt" style="color:var(--color-gold)">$</span> codex mcp add tokenmonitor-mcp -- "$(command -v tokenmonitor-mcp)"</div>
-        <p style="font-size: 0.92rem; color: var(--fg-3); margin-top: -0.4rem;">Adds an <code class="inline-code">[mcp_servers.tokenmonitor-mcp]</code> entry to <code class="inline-code">~/.codex/config.toml</code>.</p>
+        <div class="route-panel active" id="routepanel-codex-terminal" data-route-panel="terminal"
+             role="tabpanel" aria-labelledby="route-codex-terminal" tabindex="0">
+          <p class="route-note">Codex CLI reads the same marketplace Claude Code does. Two shell commands — add the marketplace, then install the plugin from it. Nothing else to install first: the plugin bundles its own server.</p>
 
-        <h4>What you get</h4>
-<div class="code-block"><span class="cmt"># Tools Codex can call as needed</span>
+          <h4>Install</h4>
+<div class="code-block"><span class="prompt" style="color:var(--color-gold)">$</span> codex plugin marketplace add fractal-manifold/mcp-marketplace
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin add tokenmonitor@fractalmanifold-mcp-marketplace</div>
+          <p class="route-fine" style="margin-top: -0.4rem;">Skills and MCP servers are read when a thread starts, so <strong>open a new Codex thread</strong> afterwards. Confirm with <code class="inline-code">codex plugin list</code> — <code class="inline-code">tokenmonitor@fractalmanifold-mcp-marketplace</code> should read <em>installed, enabled</em>.</p>
+
+          <h4>What it adds</h4>
+<div class="code-block"><span class="cmt"># Skills (you invoke these) — the CLI gets all four</span>
+/tokenmonitor:configure
+/tokenmonitor:theme <span class="accent" style="color:var(--color-purple-light)">&lt;day|night|auto&gt;</span>
+/tokenmonitor:settings <span class="accent" style="color:var(--color-purple-light)">&lt;change&gt;…</span>
+/tokenmonitor:firmware
+
+<span class="cmt"># Tools Codex calls as needed — the diagnostic four,</span>
+<span class="cmt"># plus control-plane tools the skills drive for you</span>
 tokenmonitor_status
 tokenmonitor_health
 tokenmonitor_recent_logs
-tokenmonitor_provision_hint
+tokenmonitor_provision_hint</div>
 
-<span class="cmt"># Pair &amp; reconfigure by asking Codex in plain language —</span>
-<span class="cmt"># it drives the provisioning + control-plane tools for you.</span></div>
+          <h4>Where it lives</h4>
+          <p class="route-fine">The plugin is cached per-user under <code class="inline-code">~/.codex/plugins/cache/fractalmanifold-mcp-marketplace/tokenmonitor/&lt;version&gt;/</code>. Installing writes the marketplace source and an <code class="inline-code">enabled</code> flag to <code class="inline-code">~/.codex/config.toml</code> — you never hand-author an <code class="inline-code">[mcp_servers]</code> block.</p>
 
-        <h4>Remove it</h4>
-        <p style="font-size: 0.92rem; color: var(--fg-3);">Drop the server any time with <code class="inline-code">codex mcp remove tokenmonitor-mcp</code>.</p>
+          <h4>Update &amp; remove</h4>
+<div class="code-block"><span class="cmt"># updating takes both steps — refreshing the marketplace</span>
+<span class="cmt"># snapshot alone leaves the cached plugin where it was</span>
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin marketplace upgrade fractalmanifold-mcp-marketplace
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin add tokenmonitor@fractalmanifold-mcp-marketplace
 
-        <div class="method-head"><span class="method-tag">From the desktop app</span><span class="method-note">Codex · Plugins</span></div>
-        <p class="lead">The Codex desktop app has its own plugin marketplace. Installing from there pulls the <strong>full plugin — skills <em>and</em> tools</strong>, not just the MCP server the CLI command registers.</p>
-        <ol class="gui-steps">
-          <li>Open <strong>Plugins</strong>, click <strong>Create ▾</strong> in the top-right and choose <strong>Add marketplace</strong>.</li>
-          <li>Point it at the marketplace repo <code class="inline-code">fractal-manifold/mcp-marketplace</code>.</li>
-          <li>The <code class="inline-code">fractalmanifold-mcp-marketplace</code> section appears — install the <strong>TokenMonitor</strong> plugin (&ldquo;Control and diagnose TokenMonitor&hellip;&rdquo;).</li>
-        </ol>
-        <figure class="shot shot-wide">
-          <img src="/assets/codex-desktop-add-marketplace.png"
-               alt="Codex desktop Plugins page with the Create menu open, showing the Add marketplace option"
-               width="1325" height="365" loading="lazy" decoding="async" />
-          <figcaption>Codex desktop → Plugins → <strong>Create ▾</strong> → <strong>Add marketplace</strong>.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="/assets/codex-desktop-tokenmonitor-installed.png"
-               alt="Codex desktop Plugins page showing the fractalmanifold-mcp-marketplace section with the TokenMonitor plugin"
-               width="932" height="752" loading="lazy" decoding="async" />
-          <figcaption>The <code class="inline-code">fractalmanifold-mcp-marketplace</code> section, with the TokenMonitor plugin ready to install.</figcaption>
-        </figure>
+<span class="cmt"># uninstall</span>
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin remove tokenmonitor@fractalmanifold-mcp-marketplace</div>
+          <p class="route-fine" style="margin-top: -0.4rem;">Either way, start a fresh thread — a running one keeps whatever it loaded at start.</p>
+
+          <div class="route-warn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <div><strong>Don't register it by hand.</strong> A <code class="inline-code">codex mcp add</code> entry pointed at a <code class="inline-code">tokenmonitor-mcp</code> binary gets you neither the four skills nor the plugin manifest's 60-second first-start allowance — which the server needs the one time it resolves its runtime. Go through the marketplace.</div>
+          </div>
+        </div>
+
+        <div class="route-panel" id="routepanel-codex-desktop" data-route-panel="desktop"
+             role="tabpanel" aria-labelledby="route-codex-desktop" tabindex="0">
+          <p class="route-note">The Codex desktop app browses the same marketplace. Same plugin, same skills and tools — clicked instead of typed.</p>
+          <ol class="gui-steps">
+            <li>Open <strong>Plugins</strong>, click <strong>Create ▾</strong> in the top-right and choose <strong>Add marketplace</strong>.</li>
+            <li>Point it at the marketplace repo <code class="inline-code">fractal-manifold/mcp-marketplace</code>.</li>
+            <li>The <code class="inline-code">fractalmanifold-mcp-marketplace</code> section appears — install the <strong>TokenMonitor</strong> plugin (&ldquo;Control and diagnose TokenMonitor&hellip;&rdquo;).</li>
+          </ol>
+          <figure class="shot shot-wide">
+            <img src="/assets/codex-desktop-add-marketplace.png"
+                 alt="Codex desktop Plugins page with the Create menu open, showing the Add marketplace option"
+                 width="1325" height="365" loading="lazy" decoding="async" />
+            <figcaption>Codex desktop → Plugins → <strong>Create ▾</strong> → <strong>Add marketplace</strong>.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="/assets/codex-desktop-tokenmonitor-installed.png"
+                 alt="Codex desktop Plugins page showing the fractalmanifold-mcp-marketplace section with the TokenMonitor plugin"
+                 width="932" height="752" loading="lazy" decoding="async" />
+            <figcaption>The <code class="inline-code">fractalmanifold-mcp-marketplace</code> section, with the TokenMonitor plugin ready to install.</figcaption>
+          </figure>
+        </div>
       </div>
 
       <!-- ── Antigravity CLI panel ───────────────────────────── -->
-      <div class="cli-panel" data-panel="antigravity">
+      <div class="cli-panel" id="clipanel-antigravity" data-panel="antigravity"
+           role="tabpanel" aria-labelledby="clitab-antigravity" tabindex="0">
         <div class="panel-head">
           <h2>Antigravity CLI</h2>
           <span class="marketplace">via <a href="https://github.com/fractal-manifold/mcp-marketplace" target="_blank" rel="noopener">fractal-manifold/mcp-marketplace</a></span>
         </div>
-        <p class="lead">Antigravity — the <code class="inline-code">agy</code> CLI, Google's successor to the Gemini CLI — installs plugins straight from a GitHub subpath. One command; the plugin is self-contained (it bundles its own MCP server), so there's no separate broker install to wire up. (It still runs the Gemini-family models, e.g. <code class="inline-code">gemini-3.5-flash</code> and <code class="inline-code">gemini-3.1-pro</code>.)</p>
+
+        <!-- Antigravity ships no desktop app, so this panel has one route only —
+             deliberately no sub-tab bar rather than a disabled second segment. -->
+        <div class="route-solo">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg>
+          Terminal only
+        </div>
+
+        <p class="route-note">Antigravity — the <code class="inline-code">agy</code> CLI, Google's successor to the Gemini CLI — installs plugins straight from a GitHub subpath. One command; the plugin is self-contained (it bundles its own MCP server), so there's no separate broker install to wire up. (It still runs the Gemini-family models, e.g. <code class="inline-code">gemini-3.5-flash</code> and <code class="inline-code">gemini-3.1-pro</code>.)</p>
 
         <h4>Install</h4>
 <div class="code-block"><span class="prompt" style="color:var(--color-gold)">$</span> agy plugin install https://github.com/fractal-manifold/mcp-marketplace/plugins/tokenmonitor</div>
-        <p style="font-size: 0.92rem; color: var(--fg-3); margin-top: -0.4rem;">Note the subcommand is <code class="inline-code">plugin</code> (not <code class="inline-code">extensions</code>), and the target is the full <code class="inline-code">https://github.com/…</code> URL — a bare <code class="inline-code">owner/repo</code> shorthand is rejected.</p>
+        <p class="route-fine" style="margin-top: -0.4rem;">Note the subcommand is <code class="inline-code">plugin</code> (not <code class="inline-code">extensions</code>), and the target is the full <code class="inline-code">https://github.com/…</code> URL — a bare <code class="inline-code">owner/repo</code> shorthand is rejected.</p>
 
         <h4>Where it lands</h4>
         <span class="file-tag">~/.gemini/config/plugins/tokenmonitor/gemini-extension.json</span>
 <div class="code-block">&#123;
   <span class="str">"name"</span>:    <span class="str">"tokenmonitor"</span>,
-  <span class="str">"version"</span>: <span class="str">"0.11.0"</span>,
+  <span class="str">"version"</span>: <span class="str">"0.11.2"</span>,
   <span class="str">"mcpServers"</span>: &#123;
     <span class="str">"tokenmonitor"</span>: &#123;
       <span class="str">"command"</span>: <span class="str">"sh"</span>,
@@ -155,7 +219,7 @@ tokenmonitor_provision_hint
     &#125;
   &#125;
 &#125;</div>
-        <p style="font-size: 0.92rem; color: var(--fg-3); margin-top: -0.4rem;">The install copies the whole plugin — skills, hooks and the bundled <code class="inline-code">server/</code> launcher. Start a fresh <code class="inline-code">agy</code> session to load it; remove it any time with <code class="inline-code">agy plugin uninstall tokenmonitor</code>.</p>
+        <p class="route-fine" style="margin-top: -0.4rem;">The install copies the whole plugin — skills, hooks and the bundled <code class="inline-code">server/</code> launcher. Start a fresh <code class="inline-code">agy</code> session to load it; remove it any time with <code class="inline-code">agy plugin uninstall tokenmonitor</code>.</p>
       </div>
 
       <!-- ── Verify (common to all three) ────────────────────── -->
@@ -357,16 +421,89 @@ tokenmonitor_provision_hint
 </Layout>
 
 <script>
-  document.querySelectorAll('.cli-tab').forEach(t => {
-    t.addEventListener('click', () => {
-      const cli = t.dataset.cli;
-      document.querySelectorAll('.cli-tab').forEach(b => b.classList.remove('active'));
-      t.classList.add('active');
-      document.querySelectorAll('.cli-panel').forEach(p => {
-        p.classList.toggle('active', p.dataset.panel === cli);
+  // Two levels of tabs: which CLI (top) and which route within it (terminal /
+  // desktop app). Both are wired by the same helper; the route lists are scoped
+  // to their own panel so the two levels never steal each other's buttons.
+  type TabGroup = { tabs: HTMLElement[]; select: (tab: HTMLElement) => void };
+
+  // Assigned once both groups exist; called after any *user-driven* selection
+  // (mouse or keyboard) so the URL tracks the UI either way.
+  let syncHash = () => {};
+
+  function wire(tabs: HTMLElement[], panels: HTMLElement[], key: 'cli' | 'route'): TabGroup {
+    const panelKey = key === 'cli' ? 'panel' : 'routePanel';
+    const select = (tab: HTMLElement) => {
+      const value = tab.dataset[key];
+      tabs.forEach(t => {
+        const on = t === tab;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(p => p.classList.toggle('active', p.dataset[panelKey] === value));
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => { select(tab); syncHash(); });
+      tab.addEventListener('keydown', (e: KeyboardEvent) => {
+        const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        select(next);
+        next.focus();
+        syncHash();
       });
     });
+    return { tabs, select };
+  }
+
+  const cliTabs = [...document.querySelectorAll<HTMLElement>('.cli-tabs .cli-tab')];
+  const cliGroup = wire(cliTabs, [...document.querySelectorAll<HTMLElement>('.cli-panel')], 'cli');
+
+  // One route group per CLI panel. Antigravity has no desktop route and so no
+  // .route-tabs element — it simply yields no group.
+  const routeGroups = new Map<string, TabGroup>();
+  document.querySelectorAll<HTMLElement>('.cli-panel').forEach(panel => {
+    const bar = panel.querySelector('.route-tabs');
+    if (!bar) return;
+    const group = wire(
+      [...bar.querySelectorAll<HTMLElement>('.route-tab')],
+      [...panel.querySelectorAll<HTMLElement>('.route-panel')],
+      'route',
+    );
+    routeGroups.set(panel.dataset.panel!, group);
   });
+
+  // Keep the URL shareable. replaceState doesn't fire hashchange, so this can't
+  // loop back into applyHash().
+  syncHash = () => {
+    const cli = cliTabs.find(t => t.classList.contains('active'))?.dataset.cli;
+    if (!cli) return;
+    const route = routeGroups.get(cli)?.tabs.find(t => t.classList.contains('active'))?.dataset.route;
+    history.replaceState(null, '', `#${cli}${route && route !== 'terminal' ? `-${route}` : ''}`);
+  };
+
+  // Deep links: #codex opens that CLI on its default (terminal) route,
+  // #codex-desktop on the desktop-app route. Any other hash — notably the
+  // page's own #skills anchor — is left entirely alone.
+  const applyHash = () => {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash) return;
+    const [cli, route] = hash.split('-');
+    const cliTab = cliTabs.find(t => t.dataset.cli === cli);
+    if (!cliTab) return;
+    cliGroup.select(cliTab);
+    const group = routeGroups.get(cli);
+    if (group) {
+      // No route named, or one this CLI doesn't have (#antigravity-desktop):
+      // fall back to the first route rather than leaving whatever was open.
+      const routeTab = route && group.tabs.find(t => t.dataset.route === route);
+      group.select(routeTab || group.tabs[0]);
+    }
+    syncHash();  // normalises an unsupported route back out of the URL
+  };
+  applyHash();
+  window.addEventListener('hashchange', applyHash);
 </script>
 
 <style is:global>
@@ -394,57 +531,85 @@ tokenmonitor_provision_hint
   }
   .part-head .lead { max-width: 60ch; font-size: 1.08rem; margin-top: 1rem; }
 
-  /* ── Big tab switcher ───────────────────────────────────── */
+  /* ── CLI switcher — one segmented control, not three cards ─
+     The card treatment this replaced (3-col grid, hover lift, faint active
+     border) read as three separate nav cards. A single bordered track with
+     equal segments plus a caret into the panel makes it obvious that these
+     swap the content below. */
   .cli-tabs {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin: 3rem 0 2.5rem 0;
-  }
-  .cli-tab {
+    gap: 4px;
+    padding: 5px;
+    margin: 3rem 0 0 0;
     background: var(--color-bg-tertiary);
     border: var(--border-faint);
     border-radius: var(--radius-lg);
-    padding: 1.5rem 1.75rem;
-    cursor: pointer;
-    text-align: left;
     backdrop-filter: blur(8px);
-    transition: all var(--ease-standard);
-    display: flex; align-items: center; gap: 1rem;
   }
-  .cli-tab:hover { transform: translateY(-3px); }
-  .cli-tab .swatch {
-    width: 14px; height: 14px; border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .cli-tab .swatch.claude { background: #e07a4a; box-shadow: 0 0 14px rgba(224,122,74,0.5); }
-  .cli-tab .swatch.codex  { background: #1ed29c; box-shadow: 0 0 14px rgba(30,210,156,0.5); }
-  .cli-tab .swatch.antigravity { background: #3186FF; box-shadow: 0 0 14px rgba(49,134,255,0.5); }
-  .cli-tab .label-block { line-height: 1.2; }
-  .cli-tab h3 {
+  .cli-tab {
+    position: relative;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    transition: background var(--ease-snappy), color var(--ease-snappy), border-color var(--ease-snappy);
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
     font-family: var(--font-display);
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    color: var(--fg-1);
-    margin: 0 0 0.2rem 0;
-  }
-  .cli-tab .sub {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     color: var(--fg-3);
-    font-family: var(--font-mono);
+    white-space: nowrap;
   }
-  .cli-tab.active {
-    background: rgba(245,158,11,0.06);
-    border: 1px solid rgba(245,158,11,0.30);
-    box-shadow: var(--shadow-sm);
+  .cli-tab:hover { background: rgba(255,255,255,0.04); color: var(--fg-1); }
+  .cli-tab:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .cli-tab .swatch {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.45;
+    transition: opacity var(--ease-snappy), box-shadow var(--ease-snappy);
   }
-  .cli-tab.active.claude { border-color: rgba(224,122,74,0.50); box-shadow: 0 8px 30px rgba(224,122,74,0.18); }
-  .cli-tab.active.codex  { border-color: rgba(30,210,156,0.50); box-shadow: 0 8px 30px rgba(30,210,156,0.18); }
-  .cli-tab.active.antigravity { border-color: rgba(49,134,255,0.50); box-shadow: 0 8px 30px rgba(49,134,255,0.18); }
+  .cli-tab .swatch.claude { background: #e07a4a; }
+  .cli-tab .swatch.codex  { background: #1ed29c; }
+  .cli-tab .swatch.antigravity { background: #3186FF; }
+  .cli-tab.active .swatch { opacity: 1; }
+  .cli-tab.active.claude .swatch { box-shadow: 0 0 12px rgba(224,122,74,0.7); }
+  .cli-tab.active.codex  .swatch { box-shadow: 0 0 12px rgba(30,210,156,0.7); }
+  .cli-tab.active.antigravity .swatch { box-shadow: 0 0 12px rgba(49,134,255,0.7); }
+
+  /* Active segment: filled + tinted in the provider's own colour. */
+  .cli-tab.active.claude      { background: rgba(224,122,74,0.13); border-color: rgba(224,122,74,0.40); color: #f0a077; }
+  .cli-tab.active.codex       { background: rgba(30,210,156,0.13);  border-color: rgba(30,210,156,0.40);  color: #5fe0bb; }
+  .cli-tab.active.antigravity { background: rgba(49,134,255,0.13);  border-color: rgba(49,134,255,0.40);  color: #7db0ff; }
+
+  /* On cream, the light brand tones used above wash out — darken the label and
+     deepen the fill so the active segment still carries the contrast. */
+  [data-theme="light"] .cli-tab.active.claude      { background: rgba(224,122,74,0.16); border-color: rgba(180,84,40,0.45); color: #a5501f; }
+  [data-theme="light"] .cli-tab.active.codex       { background: rgba(16,163,127,0.14); border-color: rgba(13,120,94,0.45);  color: #0b6b53; }
+  [data-theme="light"] .cli-tab.active.antigravity { background: rgba(49,134,255,0.13); border-color: rgba(30,98,196,0.45);  color: #1a5cba; }
+  [data-theme="light"] .cli-tab .swatch.codex { background: #10a37f; }
+  [data-theme="light"] .cli-tab.active.codex .swatch { box-shadow: 0 0 12px rgba(16,163,127,0.5); }
+  [data-theme="light"] .cli-tab:hover { background: rgba(20,17,11,0.05); }
+
+  /* Caret dropping out of the active segment into the panel below. */
+  .cli-tab.active::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: -11px;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid currentColor;
+    opacity: 0.55;
+  }
 
   /* ── CLI panel ──────────────────────────────────────────── */
   .cli-panel { display: none; }
-  .cli-panel.active { display: block; }
+  /* Clears the caret hanging out of the active segment above. */
+  .cli-panel.active { display: block; margin-top: 2.5rem; }
+  .cli-panel:focus-visible { outline: none; }
   .cli-panel .panel-head {
     display: flex; align-items: baseline; justify-content: space-between;
     margin-bottom: 1.5rem;
@@ -465,7 +630,6 @@ tokenmonitor_provision_hint
     text-decoration: underline;
     text-decoration-color: rgba(245,158,11,0.4);
   }
-  .cli-panel .lead { font-size: 1.05rem; color: var(--fg-2); }
   .cli-panel h4 {
     font-family: var(--font-display);
     font-size: 0.7rem;
@@ -474,6 +638,9 @@ tokenmonitor_provision_hint
     text-transform: uppercase;
     margin: 2rem 0 0.8rem 0;
   }
+  /* These blocks are authored with real newlines; without this they collapse
+     into one run-on line (setup.astro carries the same rule). */
+  .code-block { white-space: pre-wrap; overflow-wrap: anywhere; }
   .cli-panel .code-block { margin-bottom: 1rem; }
 
   .file-tag {
@@ -488,37 +655,90 @@ tokenmonitor_provision_hint
     margin-bottom: 0.6rem;
   }
 
-  /* ── Method divider (Command line vs Desktop app) ───────── */
-  .method-head {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin: 2.75rem 0 1rem 0;
-    padding-top: 1.5rem;
-    border-top: var(--border-faint);
-  }
-  /* The command-line method sits right under the panel head — no top rule. */
-  .cli-panel > .method-head:first-of-type {
-    margin-top: 0.5rem;
-    padding-top: 0;
-    border-top: none;
-  }
-  .method-head .method-tag {
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--fg-1);
-    background: rgba(245,158,11,0.08);
-    border: 1px solid rgba(245,158,11,0.22);
-    padding: 0.3rem 0.7rem;
+  /* ── Route switcher (Terminal vs Desktop app) ─────────────
+     Second level, one per CLI panel. Deliberately quieter than .cli-tabs — a
+     smaller track and no brand tint — so the hierarchy reads at a glance.
+     Previously these two routes ran together down one column separated only by
+     a rule, and readers scrolled straight past the boundary. */
+  .route-tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    margin: 0 0 1.5rem 0;
+    background: rgba(255,255,255,0.03);
+    border: var(--border-faint);
     border-radius: var(--radius-md);
   }
-  .method-head .method-note {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+  .route-tab {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 0.5rem 0.95rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
     color: var(--fg-3);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--ease-snappy);
+  }
+  .route-tab svg { opacity: 0.7; }
+  .route-tab:hover { color: var(--fg-1); background: rgba(255,255,255,0.04); }
+  .route-tab:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  .route-tab.active {
+    background: rgba(245,158,11,0.12);
+    color: var(--color-gold);
+    box-shadow: inset 0 0 0 1px rgba(245,158,11,0.25);
+  }
+  .route-tab.active svg { opacity: 1; }
+
+  /* Antigravity ships no desktop app — a static label, not a dead tab. */
+  .route-solo {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 0.5rem 0.95rem;
+    margin: 0 0 1.5rem 0;
+    border: var(--border-faint);
+    border-radius: var(--radius-md);
+    color: var(--fg-3);
+  }
+
+  .route-panel { display: none; }
+  .route-panel.active { display: block; }
+  .route-note { font-size: 1.02rem; color: var(--fg-2); line-height: 1.7; }
+  .route-fine { font-size: 0.92rem; color: var(--fg-3); line-height: 1.65; }
+  .route-panel > h4:first-child,
+  .route-note:first-child { margin-top: 0; }
+
+  /* Inline warning — used for "don't hand-roll a codex mcp add entry". */
+  .route-warn {
+    display: flex; gap: 0.85rem;
+    margin-top: 2rem;
+    padding: 1rem 1.15rem;
+    background: rgba(245,158,11,0.05);
+    border: 1px solid rgba(245,158,11,0.20);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--fg-2);
+  }
+  .route-warn svg { flex-shrink: 0; margin-top: 0.15rem; color: var(--color-gold); }
+  .route-warn strong { color: var(--fg-1); }
+
+  [data-theme="light"] .route-tabs { background: rgba(20,17,11,0.03); }
+  [data-theme="light"] .route-tab:hover { background: rgba(20,17,11,0.05); }
+  [data-theme="light"] .route-tab.active {
+    background: rgba(196,112,18,0.12);
+    box-shadow: inset 0 0 0 1px rgba(196,112,18,0.32);
+  }
+  [data-theme="light"] .route-warn {
+    background: rgba(196,112,18,0.07);
+    border-color: rgba(196,112,18,0.28);
   }
 
   /* ── GUI step list ──────────────────────────────────────── */
@@ -832,7 +1052,23 @@ tokenmonitor_provision_hint
   .flow .chat-bubble.cli::before { content: 'CLAUDE'; }
 
   @media (max-width: 900px) {
-    .cli-tabs { grid-template-columns: 1fr; }
+    /* Stays a row — stacking it back into full-width blocks is exactly what
+       made it read as three cards instead of one control. */
+    /* Labels wrap inside their own third rather than overflowing the track —
+       "ANTIGRAVITY CLI" does not fit one line on a phone. */
+    .cli-tab {
+      flex-direction: column;
+      gap: 0.4rem;
+      padding: 0.7rem 0.35rem;
+      font-size: 0.64rem;
+      letter-spacing: 0.3px;
+      white-space: normal;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .cli-tab .swatch { width: 8px; height: 8px; }
+    /* The heading and the marketplace note fight for one line once the h2 wraps. */
+    .cli-panel .panel-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
     .skills-grid { grid-template-columns: 1fr; }
     .tools-grid { grid-template-columns: 1fr; }
     .flow-row { grid-template-columns: 1fr; }

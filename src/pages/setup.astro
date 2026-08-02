@@ -49,9 +49,11 @@ import Layout from '../layouts/Layout.astro';
 <span class="prompt" style="color:var(--color-gold)">&gt;</span> /plugin install tokenmonitor@fractalmanifold-mcp-marketplace</div>
             </div>
             <div class="install-panel" data-panel="codex" style="margin-top: 1rem">
-<div class="code-block"><span class="cmt"># Same marketplace as Claude Code</span>
-<span class="prompt" style="color:var(--color-gold)">&gt;</span> /plugin marketplace add fractal-manifold/mcp-marketplace
-<span class="prompt" style="color:var(--color-gold)">&gt;</span> /plugin install tokenmonitor@fractalmanifold-mcp-marketplace</div>
+<div class="code-block"><span class="cmt"># Same marketplace as Claude Code — from your shell, not the Codex prompt</span>
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin marketplace add fractal-manifold/mcp-marketplace
+<span class="prompt" style="color:var(--color-gold)">$</span> codex plugin add tokenmonitor@fractalmanifold-mcp-marketplace
+
+<span class="cmt"># then start a new Codex thread so it loads</span></div>
             </div>
             <div class="install-panel" data-panel="antigravity" style="margin-top: 1rem">
 <div class="code-block"><span class="cmt"># Antigravity (agy) installs the plugin straight from the GitHub subpath</span>
@@ -79,8 +81,8 @@ import Layout from '../layouts/Layout.astro';
             <div>&nbsp;</div>
             <div><span class="prompt">&gt;</span> <span class="input-line">/plugin install tokenmonitor@fractalmanifold-mcp-marketplace</span></div>
             <div class="out">Fetching plugin <span class="accent">tokenmonitor</span>…</div>
-            <div class="out">Loaded skills: <span class="accent">configure</span>, <span class="accent">theme</span>, <span class="accent">settings</span></div>
-            <div class="out">MCP server <span class="accent">tokenmonitor</span> ready (4 tools)</div>
+            <div class="out">Loaded skills: <span class="accent">configure</span>, <span class="accent">theme</span>, <span class="accent">settings</span>, <span class="accent">firmware</span></div>
+            <div class="out">MCP server <span class="accent">tokenmonitor</span> ready (17 tools)</div>
             <div><span class="ok">[ok]</span> plugin installed · waiting for devices</div>
           </div>
         </div>
@@ -231,7 +233,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="step-num">04</div>
           <h2 style="color: var(--color-gold)">Pair from your AI agent. <span style="color:var(--fg-1)">The magic moment.</span></h2>
           <div class="step-rule"></div>
-          <p>Install the plugin (one line — see the <a href="/plugin.html" style="color: var(--color-gold-light); text-decoration: underline; text-decoration-color: rgba(245,158,11,0.4);">plugin page</a>), then ask Claude Code, Codex or Antigravity to configure your device:</p>
+          <p>Install the plugin (step 01 above, or the <a href="/plugin.html" style="color: var(--color-gold-light); text-decoration: underline; text-decoration-color: rgba(245,158,11,0.4);">plugin page</a> for the full per-CLI walkthrough), then ask Claude Code, Codex or Antigravity to configure your device:</p>
 <div class="code-block" style="margin: 1rem 0"><span class="prompt" style="color:var(--color-gold)">&gt;</span> /tokenmonitor:configure</div>
           <p>The agent does the rest:</p>
           <ul>

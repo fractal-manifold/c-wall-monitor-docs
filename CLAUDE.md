@@ -223,20 +223,53 @@ Each section with the matching mockup:
 
 ### 5. Plugin install (`/plugin`)
 
-Three tabs (or stacked cards) — one per CLI.
+**Two levels of tabs — keep them.** Level 1 is a *segmented control* (one
+bordered track, three equal segments, brand-tinted active fill, caret dropping
+into the panel), one segment per CLI. It replaced a 3-column grid of hover-lift
+cards that read as three nav cards rather than one switcher — don't reintroduce
+card styling, the hover lift, or a mobile rule that stacks the track into
+full-width blocks. Level 2, inside each panel, is a smaller **Terminal /
+Desktop app** switcher. **Antigravity renders no level-2 bar at all** (a static
+"Terminal only" tag instead) — it has no desktop app, and a disabled segment
+would imply one exists. Both levels are ARIA tablists with ←/→ keys; deep links
+are `#codex`, `#codex-desktop`, …
 
 **Claude Code**
 ```text
 /plugin marketplace add fractal-manifold/mcp-marketplace
-/plugin install tokenmonitor
+/plugin install tokenmonitor@fractalmanifold-mcp-marketplace
 ```
 
-**Codex CLI** — reads `~/.codex/config.toml`:
-```toml
-[mcp_servers.tokenmonitor]
-command = "tokenmonitor-mcp"
-args = ["mcp"]
+**Codex CLI** — first-class plugin/marketplace support; the CLI gets the **full
+plugin, skills included**. These are *shell* commands, not slash commands
+(verified against `codex-cli` 0.146.0):
+```bash
+codex plugin marketplace add fractal-manifold/mcp-marketplace
+codex plugin add tokenmonitor@fractalmanifold-mcp-marketplace
 ```
+Then **start a new Codex thread** (skills + MCP servers load at thread start);
+verify with `codex plugin list`. Remove with `codex plugin remove
+tokenmonitor@fractalmanifold-mcp-marketplace`. Files cache under
+`~/.codex/plugins/cache/fractalmanifold-mcp-marketplace/tokenmonitor/<version>/`;
+installing writes the marketplace source + an `enabled` flag to
+`~/.codex/config.toml` (later use adds more keys there, so don't say "only").
+
+**Updating takes two commands, not one** — `marketplace upgrade` refreshes the
+Git snapshot but leaves the cached plugin at its old version, so the install
+must be re-run:
+```bash
+codex plugin marketplace upgrade fractalmanifold-mcp-marketplace
+codex plugin add tokenmonitor@fractalmanifold-mcp-marketplace
+```
+
+Do **not** document `codex mcp add … "$(command -v tokenmonitor-mcp)"` — the
+page said that for a while and it is broken: nothing installs a standalone
+`tokenmonitor-mcp` on `PATH` (the plugin bundles its own server), so the entry
+gets an empty command. It also skips the four skills and drops the manifest's
+60 s first-start allowance. Don't quote a number for the fallback timeout —
+the CLI reports it as `null`, so it isn't verified. Don't claim the CLI has no
+`/plugin`-style TUI command either; that couldn't be verified. Just document
+the shell route.
 
 **Antigravity CLI** (`agy`, successor to the Gemini CLI) — installs
 from a GitHub subpath into `~/.gemini/config/plugins/`. Subcommand is
@@ -253,7 +286,7 @@ points at that launcher (do NOT document a global-PATH `tokenmonitor-mcp`
 ```json
 {
   "name": "tokenmonitor",
-  "version": "0.11.0",
+  "version": "0.11.2",
   "mcpServers": {
     "tokenmonitor": {
       "command": "sh",
