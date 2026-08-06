@@ -5,9 +5,10 @@
  *   1. `PageVisit` on every page — Reddit's baseline signal, required for the
  *      ad account to attribute anything at all.
  *   2. `Lead` on every campaign CTA click — the conversion we actually
- *      optimise for. While the campaign is in prelaunch the CTA is
- *      "Follow on Kickstarter" (a notify-me signup), so `Lead` is the right
- *      standard event; `Purchase` would be a lie until pledges open.
+ *      optimise for. It stays `Lead` now that the campaign is live and the
+ *      CTA is "Back it on Kickstarter": the click is an outbound referral,
+ *      and the pledge itself completes on Kickstarter where this pixel can't
+ *      see it, so `Purchase` would still be a lie.
  *
  * The CTA hook is a delegated listener rather than an `onclick` on each
  * button: the campaign link is rendered in six places (announce bar, header,

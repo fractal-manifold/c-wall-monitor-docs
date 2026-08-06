@@ -59,7 +59,7 @@ an international audience and is English-only.
 - Sub: "A 4-inch always-on desk display that shows live Claude
   Code, Codex and Antigravity usage from your laptop. 86×86 mm
   footprint, USB-C powered, sits on the desk with its own base."
-- Primary CTA: **Follow on Kickstarter** (see *Campaign CTAs* below)
+- Primary CTA: **Back it on Kickstarter** (see *Campaign CTAs* below)
 - Secondary CTA: **How it works → /how-it-works**
 - Visual: `prototype.jpg` on the right, or a device frame cycling
   through the three providers' day-mode dashboards.
@@ -90,10 +90,11 @@ never at a form or a waitlist. The URL and button label live in
 `src/consts.ts` (`KICKSTARTER_URL`, `KICKSTARTER_CTA`); import them rather
 than hard-coding.
 
-The campaign is in **prelaunch**: its page only offers *Notify me on
-launch*, so copy says *follow / get notified* and never *back it now* or
-*pledge*. `src/consts.ts` carries the launch-day checklist of every place
-prelaunch wording lives.
+The campaign is **live** (since 2026-08-06): its page accepts pledges, so
+copy says *back it / pledge* and never *follow* or *get notified at launch*.
+`src/consts.ts` carries the end-of-campaign checklist of every place the
+live wording lives — that same checklist, in its prelaunch form, is what
+flipped the site on launch day.
 
 Price anchor: **Super Early Bird €99, first 50 backers, excl. shipping &
 tax** — the only price the site states. Kickstarter owns the rest of the
@@ -114,10 +115,11 @@ instead of hard-coding pixels.
   `REDDIT_CTA_EVENT` on any click through to a `kickstarter.com` host. The CTA
   hook is one delegated listener matching on hostname, *not* an `onclick` per
   button, so new CTAs are tracked automatically — don't add per-button
-  handlers. The event stays **`Lead`** while the campaign is in prelaunch (the
-  CTA is a notify-me follow); it becomes a launch-day item only if the site
-  ever hosts a real checkout — a click through to Kickstarter is not a
-  `Purchase`. The pixel id is public by design; it is not a secret.
+  handlers. The event stays **`Lead`** now that the campaign is live too — the
+  click is an outbound referral and the pledge completes on Kickstarter, out of
+  the pixel's sight, so a click through to Kickstarter is not a `Purchase`.
+  Revisit only if the site ever hosts a real checkout. The pixel id is public
+  by design; it is not a secret.
 
 Two caveats a future editor needs. **(1)** The pixel currently loads
 unconditionally, with no consent gate, on a site that ships to the EU and UK —
