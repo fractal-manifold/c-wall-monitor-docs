@@ -1,9 +1,17 @@
 # Brief — TokenMonitor marketing + docs site
 
-> Hand this brief to Claude Design (or any designer) to rebuild the
-> public site from scratch. The current Astro/Starlight scaffold in
-> this repo can be wiped — only keep `.github/workflows/deploy.yml`
-> and the GitHub Pages config.
+> **ARCHIVAL — do not build from this.** This is the original pre-launch
+> positioning brief, written to commission the site that now exists. It is kept
+> for history and for the reasoning behind the tone, not as a spec.
+>
+> It is out of date in ways that matter: it describes the device as
+> **wall-mounted** (the shipped product is desk-top, with its own stand), it
+> predates the current install flow and command names, and its "wipe the
+> scaffold" instruction refers to a Starlight skeleton that is long gone — the
+> live site is a hand-built Astro project under `src/pages/`.
+>
+> For anything you intend to publish, `CLAUDE.md` and the live pages are the
+> source of truth.
 
 ## Goal
 

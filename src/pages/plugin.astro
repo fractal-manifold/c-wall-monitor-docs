@@ -5,7 +5,6 @@ import Section from '../components/Section.astro';
 <Layout
   title="Plugin & skills — TokenMonitor"
   description="Install the tokenmonitor MCP plugin for Claude, Codex or Antigravity — from the command line, or the desktop app for Claude and Codex — plus the four skills and MCP tools it adds."
-  ogImage="/assets/prototype.jpg"
   canonical="https://tokenmonitor.dev/plugin.html"
   page="plugin"
 >
@@ -304,7 +303,7 @@ tokenmonitor_provision_hint</div>
         <article class="skill-card">
           <div class="skill-name">/tokenmonitor:settings</div>
           <h3>Reconfigure a provisioned device</h3>
-          <p class="desc">Push runtime settings to an already-paired device via the control plane: city, day / night brightness, alert volume, which providers are enabled, auto-rotation, broker URL, passphrase rotation. The change applies on the device's next 60 s poll, with automatic rollback if it can't be promoted.</p>
+          <p class="desc">Push runtime settings to an already-paired device via the control plane: city, day / night brightness, alert volume, which providers are enabled, auto-rotation, broker URL, passphrase rotation. The change applies on the device's next poll — about 10 seconds — with automatic rollback if it can't be promoted.</p>
 
           <h4>When to use</h4>
           <ul>
@@ -321,7 +320,7 @@ tokenmonitor_provision_hint</div>
           <div class="syntax"><span class="arg">/tokenmonitor:settings</span> <span class="opt">&lt;natural-language change&gt;</span> [<span class="opt">--device</span> <span class="arg">&lt;device_id&gt;</span>]</div>
 
           <h4>Out of scope</h4>
-          <p class="desc" style="font-size:0.88rem">This skill will not change WiFi blind. Ask it to and it hands you to <code class="inline-code">/tokenmonitor:configure</code>, which does it properly: over a <strong>USB cable</strong> (no factory reset, and it keeps the broker URL and key), or over the LAN when the device already remembers the network you are naming. A device only ever auto-joins networks it has a password for, so an open network has to be chosen over the cable or on the device's own screen. Display and provider tweaks are also available in the on-device Settings panel (long-press the mascot).</p>
+          <p class="desc" style="font-size:0.88rem">This skill will not change WiFi blind. Ask it to and it hands you to <code class="inline-code">/tokenmonitor:configure</code>, which does it properly: over a <strong>USB cable</strong> (no factory reset, and it keeps the broker URL and key), or over the LAN when the device already remembers the network you are naming. Note the cable is only listening while the device is in <strong>pairing mode</strong> — on a device that is already online, hold <strong>BOOT</strong> for 3–10 seconds and let go first; it reboots into pairing mode and then the USB route works. A device only ever auto-joins networks it has a password for, so an open network has to be chosen over the cable or on the device's own screen. Display and provider tweaks are also available in the on-device Settings panel (tap the gear on the dashboard).</p>
         </article>
 
         <article class="skill-card">
@@ -373,7 +372,7 @@ tokenmonitor_provision_hint</div>
             <h4>Tail the broker log</h4>
             <p>Returns the last N lines (default 50) of the broker's structured log. Useful when a device shows stale data and you want to see whether the broker even received the poll.</p>
             <div class="returns">
-              <span>lines: int</span><span>level?: warn|err</span>
+              <span>limit: string</span>
             </div>
           </div>
           <div class="tool-card">

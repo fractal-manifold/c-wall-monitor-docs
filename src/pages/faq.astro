@@ -5,7 +5,6 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 <Layout
   title="FAQ & troubleshooting — TokenMonitor"
   description="Frequently asked questions and troubleshooting for the TokenMonitor."
-  ogImage="/assets/prototype.jpg"
   canonical="https://tokenmonitor.dev/faq.html"
   page="faq"
 >
@@ -71,7 +70,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
             <details class="acc-item">
               <summary class="acc-summary">How fast does the dashboard update? <span class="plus">+</span></summary>
               <div class="acc-body">
-                <p>The screen itself refreshes constantly (the device polls the broker every couple of seconds), but the underlying figures update on their own cadences: <strong>token totals</strong> from your local logs are near-instant, the <strong>provider quota percentages</strong> refresh about every <strong>90 seconds</strong>, and the <strong>spend estimate</strong> recomputes about every <strong>5 minutes</strong>. It's an ambient gauge, not a millisecond ticker.</p>
+                <p>The screen redraws continuously, but nothing is polled every couple of seconds: the device asks the broker for control-plane changes about every <strong>10 seconds</strong>, and the underlying figures update on their own cadences: <strong>token totals</strong> from your local logs are near-instant, the <strong>provider quota percentages</strong> refresh about every <strong>90 seconds</strong>, and the <strong>spend estimate</strong> recomputes about every <strong>5 minutes</strong>. It's an ambient gauge, not a millisecond ticker.</p>
               </div>
             </details>
 
@@ -137,7 +136,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
             <details class="acc-item">
               <summary class="acc-summary">Can the tokenmonitor-mcp server see my code or prompts? <span class="plus">+</span></summary>
               <div class="acc-body">
-                <p>The broker parses the token-count fields out of your CLI transcripts to total your usage. It isn't built to read or transmit the prompt and code inside those logs, and it has no endpoint that would send them anywhere. Because it's open source (Apache-2.0) and runs on your own machine, you can verify that for yourself.</p>
+                <p>The broker parses the token-count fields out of your CLI transcripts to total your usage. It isn't built to read or transmit the prompt and code inside those logs, and it has no endpoint that would send them anywhere. Because it's open source (MIT) and runs on your own machine, you can verify that for yourself.</p>
                 <p>Put plainly: the broker runs with your user permissions and can read what you can read — which is exactly why it's open and auditable rather than a black box.</p>
               </div>
             </details>
@@ -207,7 +206,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
             <details class="acc-item">
               <summary class="acc-summary">Can I modify the firmware? <span class="plus">+</span></summary>
               <div class="acc-body">
-                <p>The firmware is <strong>proprietary</strong>, and updates are distributed only as Ed25519-signed images the device verifies before installing. The broker (<code>tokenmonitor-mcp</code>), the MCP plugin and the documentation are public and <strong>Apache-2.0</strong>. You can absolutely build your own client against the broker's HTTP API — that's the integration point we support.</p>
+                <p>The firmware is <strong>proprietary</strong>, and updates are distributed only as Ed25519-signed images the device verifies before installing. The broker (<code>tokenmonitor-mcp</code>), the MCP plugin and the documentation are public and <strong>MIT</strong>. You can absolutely build your own client against the broker's HTTP API — that's the integration point we support.</p>
               </div>
             </details>
 
@@ -223,7 +222,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
               <div class="acc-body">
                 <p>Both live on the two side buttons, no tools needed:</p>
                 <ul>
-                  <li><strong>Restart</strong> — hold <strong>PWR</strong> for ~2 s. It just reboots; nothing is erased. This is the first thing to try if it ever acts up. (A short PWR press toggles standby instead.)</li>
+                  <li><strong>Restart</strong> — hold <strong>PWR</strong> for ~2 s. It just reboots; nothing is erased. This is the first thing to try if it ever acts up. (A short PWR press starts a 10-second countdown to a full power-off instead — touch the screen to cancel it.)</li>
                   <li><strong>Factory reset</strong> — hold <strong>BOOT</strong> for ~10 s. A confirmation screen appears; tap <strong>Erase</strong> to wipe Wi-Fi, city, display settings and the broker passphrase and reboot into first-boot setup, or <strong>Cancel</strong> to back out. The device's identity and update anti-rollback floor are preserved, so it re-pairs cleanly.</li>
                 </ul>
                 <p>After a factory reset, also delete the device's <code>0600</code> key file under <code>~/.config/tokenmonitor/devices/</code> on the laptop (or just re-run <code>/tokenmonitor:configure</code>) so the broker re-pairs with the fresh passphrase.</p>
@@ -233,7 +232,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
             <details class="acc-item">
               <summary class="acc-summary">What happens to it if Fractal Manifold disappears? <span class="plus">+</span></summary>
               <div class="acc-body">
-                <p>The device keeps working — it talks to the broker on your LAN, and the broker and plugin are open source (Apache-2.0). You can keep running, auditing and even forking the server indefinitely, with no account or cloud dependency on us.</p>
+                <p>The device keeps working — it talks to the broker on your LAN, and the broker and plugin are open source (MIT). You can keep running, auditing and even forking the server indefinitely, with no account or cloud dependency on us.</p>
                 <p>The limits, plainly: new firmware releases, signed OTA images, hardware repairs and replacement units depend on us continuing. The software side is yours to keep; the hardware roadmap isn't guaranteed.</p>
               </div>
             </details>
@@ -252,7 +251,7 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
             <h4>Screen doesn't turn on at all.</h4>
             <p>USB-C plugged in, no LED, no backlight, no display.</p>
             <span class="fix-tag">Fix</span>
-            <p>The supply may be under-rated. ESP32-S3 boot transients spike to ~700 mA; a 500 mA charger will brown out. Try a <strong>5 V / 1 A or higher</strong> USB-C source — ideally a dedicated wall adapter, not a hub port.</p>
+            <p>The supply may be under-rated: an ESP32-S3 draws a short current spike at boot, and a weak 500 mA port can brown out under it. Try a <strong>5 V / 1 A or higher</strong> USB-C source — ideally a dedicated wall adapter, not a hub port.</p>
             <p>If a known-good supply still gives nothing, hold the BOOT button while plugging in. If the screen comes up white with <code>boot:0x1 (DOWNLOAD)</code> visible, see the next entry.</p>
           </div>
 
@@ -289,9 +288,17 @@ import { KICKSTARTER_URL, KICKSTARTER_CTA } from '../consts';
 
           <div class="ts-card symptom">
             <span class="symptom-tag">Symptom</span>
+            <h4>My laptop's IP changed — do I have to re-point the device?</h4>
+            <p>Router rebooted, DHCP handed out a new address, or you moved the laptop between networks.</p>
+            <span class="fix-tag">Fix</span>
+            <p>Nothing to do. The device notices within about twenty seconds that the address stopped answering, asks the network over mDNS where the broker went, and picks up the new address — usually back on screen in half a minute. It only accepts an answer from a broker that already knows this device, so a stray service on the LAN can't hijack it. If it doesn't come back, the two are probably no longer on the same layer-2 network (guest Wi-Fi, VLAN, or mDNS blocked) — see the stale-data card above.</p>
+          </div>
+
+          <div class="ts-card symptom">
+            <span class="symptom-tag">Symptom</span>
             <h4>Audio is silent — no chimes on alerts.</h4>
             <span class="fix-tag">Fix</span>
-            <p>Settings → Alert volume; default is 30%. If it's already &gt; 0, check the speaker port on the back of the case isn't pressed against the desk or its stand — that flattens the audio. Lift the unit 1 cm or reseat it on its base.</p>
+            <p>Settings → Alert volume; default is 80%. If it's already &gt; 0, check the speaker port on the back of the case isn't pressed against the desk or its stand — that flattens the audio. Lift the unit 1 cm or reseat it on its base.</p>
           </div>
 
           <div class="ts-card symptom">

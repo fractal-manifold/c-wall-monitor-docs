@@ -405,7 +405,7 @@ city. Usage: `/tokenmonitor:theme <day|night|auto> [--device <device_id>]`.
 These were corrected sitewide after a source audit. Earlier copy got
 several of them wrong; keep them right.
 
-- **License**: broker `tokenmonitor-mcp` + plugin are **Apache-2.0** (not MIT).
+- **License**: broker `tokenmonitor-mcp` + plugin are **MIT**.
 - **Broker port**: device-facing HTTP on **`8765`**, LAN-reachable
   (the configure skill rejects a loopback-only bind). Not `9787`,
   not `127.0.0.1`-only.

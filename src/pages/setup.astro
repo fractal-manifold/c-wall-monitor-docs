@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Setup — TokenMonitor"
   description="Step-by-step setup tutorial for the TokenMonitor, plus an optional custom panel."
-  ogImage="/assets/prototype.jpg"
   page="setup"
   canonical="https://tokenmonitor.dev/setup.html"
   usesDeviceScreens
@@ -98,13 +97,13 @@ import Layout from '../layouts/Layout.astro';
           <div class="step-num">02</div>
           <h2>Power the device.</h2>
           <div class="step-rule"></div>
-          <p>USB-C, 5 V / 1 A. Any wall charger or USB hub will do — the device draws &lt; 4 W peak with the backlight at full.</p>
+          <p>USB-C, 5 V / 1 A. Any wall charger or USB hub that can hold that will do.</p>
           <p>On first boot, with no Wi-Fi yet stored, the device shows a setup screen offering <strong>three ways in</strong>: join its own access point and use the captive portal, type the Wi-Fi straight into the touchscreen, or push everything over a USB cable. Pick whichever suits you — the device listens on all three at once.</p>
           <div class="callout">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/></svg>
             <div>
-              <strong>Power consumption</strong>
-              <span>≈ 3 W with backlight at 80%, ≈ 0.4 W with backlight off in standby. Battery (where fitted) holds ~3 hours of operation for power cuts.</span>
+              <strong>Power and battery</strong>
+              <span>Every unit ships with a 1S Li-ion pack, so a power cut doesn't interrupt it. We will publish measured draw figures — idle, working and charging — once they're taken on production hardware; we'd rather leave the number out than quote one we haven't measured.</span>
             </div>
           </div>
         </div>
@@ -149,7 +148,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="route-head"><span class="route-n">2</span><h3>Enter WiFi here</h3></div>
           <p>No phone involved. The panel is 480×480 capacitive — it scans, you tap your network and type the password on an on-screen keyboard.</p>
           <ul>
-            <li>Sorted strongest-first, open networks flagged</li>
+            <li>The strongest networks it found, open ones flagged (the list is not sorted — the strongest are kept, not ordered)</li>
             <li><em>Manual</em> for a hidden SSID, <em>Rescan</em> if yours hasn't appeared</li>
             <li>Same picker Settings opens later to change networks</li>
           </ul>
@@ -166,7 +165,7 @@ import Layout from '../layouts/Layout.astro';
           <ul>
             <li><strong>No pairing code.</strong> Plugging it in <em>is</em> the proof you are standing in front of it</li>
             <li>Works with no shared network at all — before the device has ever seen Wi-Fi</li>
-            <li>Also how you move a configured device onto a new network later</li>
+            <li>Also how you move a configured device onto a new network later — but hold <strong>BOOT</strong> for 3–10 s and release first. Nothing listens on the cable during normal operation; that gesture reboots the device into pairing mode, which is what opens the serial link</li>
           </ul>
           <p class="route-note">Linux hosts only for now; on macOS or Windows use route 1 or 2.</p>
         </div>
@@ -281,7 +280,7 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <div>
               <h3>Forget it. Glance at it.</h3>
-              <p>86 × 86 mm footprint, sits on your desk with one USB-C cable. Standby kicks in after 20 min idle; tap anywhere to wake.</p>
+              <p>86 × 86 mm footprint, sits on your desk with one USB-C cable. After 20 min with no usage movement and no touch it powers itself fully off; a press of the PWR side button brings it back.</p>
             </div>
           </div>
           <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -335,7 +334,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="pg-num">1</div>
         <div class="pg-body">
           <h3>Turn it on</h3>
-          <p>The panel is off until you enable it. On the device: <strong style="color:var(--fg-1)">Settings → Display → Custom panel</strong>. Or from your agent, on any of the three CLIs:</p>
+          <p>The panel is off until you enable it. On the device: <strong style="color:var(--fg-1)">Settings → Content → Custom panel</strong>. Or from your agent, on any of the three CLIs:</p>
 <div class="code-block" style="margin: 0.4rem 0 0"><span class="prompt" style="color:var(--color-gold)">&gt;</span> /tokenmonitor:settings panel_enabled=true</div>
         </div>
       </div>
@@ -595,7 +594,7 @@ while True:
         <div class="section-head" style="text-align:center; max-width:660px; margin:0 auto;">
           <p class="eyebrow">One panel — or a grid</p>
           <h2 style="font-size: clamp(1.4rem, 2.6vw, 1.8rem)">Add more tiles, up to four.</h2>
-          <p style="color:var(--fg-2); margin-top:0.75rem; font-size:0.95rem">Put more objects in <code class="inline-code">tiles[]</code> and the device lays them out for you: one fills the screen, two stack in rows, three or four fall into a 2×2 grid.</p>
+          <p style="color:var(--fg-2); margin-top:0.75rem; font-size:0.95rem">Put more objects in <code class="inline-code">tiles[]</code> and the device lays them out for you: one fills the screen, two stack in rows, three go two-on-top with the third spanning the width, and four fall into a 2×2 grid. You can also declare the rows yourself.</p>
         </div>
         <div class="pg-layouts">
           <!-- 1 tile -->
@@ -669,7 +668,7 @@ while True:
                 </div>
               </div>
             </div></div></div>
-            <figcaption><b>3–4 tiles</b> · 2×2 grid</figcaption>
+            <figcaption><b>3 tiles</b> · two on top, one spanning · <b>4 tiles</b> · 2×2 grid</figcaption>
           </figure>
         </div>
       </div>
@@ -696,7 +695,7 @@ while True:
             <tr><td>X-axis labels</td><td>12</td></tr>
             <tr><td>Pie slices</td><td>8</td></tr>
             <tr><td>Table rows</td><td>12</td></tr>
-            <tr><td>Any text string</td><td>32 chars</td></tr>
+            <tr><td>Any text string</td><td>32 <strong>bytes</strong> (UTF-8, so fewer characters when accented)</td></tr>
             <tr><td>Whole file</td><td>8 KB</td></tr>
             <tr><td><code>poll_s</code> range</td><td>3–60 s</td></tr>
           </table>
